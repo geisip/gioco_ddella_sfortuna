@@ -102,4 +102,55 @@ function gestisciScelta(posizione) {
   }
 }
 
+
+
+
+
+if (messaggioRound !== null) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.messaggio}>{messaggioRound}</Text>
+      <TouchableOpacity 
+        style={styles.button} 
+        onPress={() => setMessaggioRound(null)}>
+        <Text style={styles.buttonText}>Continua</Text>
+      </TouchableOpacity>
+    </View>
+
+  );
+
 }
+
+}
+
+
+
+const styles = StyleSheet.create({
+  container: { flex: 1, 
+  justifyContent: 'center', 
+  alignItems: 'center', 
+  padding: 24, 
+  backgroundColor: 'white' },
+
+  messaggio: {
+  fontSize: 28,
+  fontWeight: 'bold',
+  marginBottom: 24,
+  textAlign: 'center',
+},
+
+  button:
+   { paddingVertical: 14,
+    paddingHorizontal: 28,
+     borderRadius: 12, 
+     backgroundColor: 'green',
+      marginHorizontal: 8 
+      },
+  buttonText: 
+  { color: 'white',
+   fontSize: 18,
+    fontWeight: '600' 
+    },
+});
+
+
