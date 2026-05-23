@@ -1,6 +1,6 @@
 import carte from '../data/card';
 import { selezionaCarteCasuali, posizioneCorretta, controllaFinePartita } from '../utils/gameLogic';
-
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 import React, { useState, useEffect } from 'react';
 
@@ -102,7 +102,14 @@ function gestisciScelta(posizione) {
   }
 }
 
-
+let vite = [];
+for (let i = 0; i < 3; i++) {
+  if (i < errori) {
+    vite.push('🤍');
+  } else {
+    vite.push('❤️');
+  }
+}
 
 
 
@@ -121,7 +128,34 @@ if (messaggioRound !== null) {
 
 }
 
+return (
+  <View style={styles.container}>
+
+    <View style={{flexDirection:'row'}}>
+      {vite.map((cuore, index) => (
+        <Text key={index} style={{fontSize: 24}}>{cuore}</Text>
+      ))}
+    </View>
+
+    {cartaCorrente && <Text>{cartaCorrente.nome}</Text>}
+
+    
+    {cartaCorrente && (
+      <Image
+        source={{ uri: cartaCorrente.urlImmagine }}
+        style={{ width: 200, height: 200 }}
+      />
+    )}
+
+  </View>
+);
+
+
+
 }
+
+
+
 
 
 
