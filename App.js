@@ -156,7 +156,8 @@ function GameScreen({ onFine }) {
   }
 
   function gestisciScelta(posizione) {
-    const corretta = posizioneCorretta(mano, cartaCorrente, posizione);
+     const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
+    const corretta = posizioneCorretta(manoOrdinata, cartaCorrente, posizione);
     let nuoveCorrette = mano.length;
     let nuoviErrori = errori;
 
