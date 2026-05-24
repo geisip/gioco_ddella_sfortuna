@@ -1,0 +1,318 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+
+
+const carte = [
+  { id: '1', nome: 'Perdi una partita online per un lag di 1 secondo', indice: 1, urlImmagine: '' },
+  { id: '2', nome: 'Il tuo personaggio muore per un errore evitabile proprio sul traguardo', indice: 3, urlImmagine: '' },
+  { id: '3', nome: 'Dimentichi di salvare e perdi 10 minuti di gioco', indice: 5, urlImmagine: '' },
+  { id: '4', nome: 'Un compagno di squadra ti fa perdere una partita facile su Rocket League', indice: 7, urlImmagine: '' },
+  { id: '5', nome: 'Finisci le munizioni nel momento peggiore su Fortnite', indice: 9, urlImmagine: '' },
+  { id: '6', nome: 'Il gioco si aggiorna e cambia i controlli che avevi imparato', indice: 11, urlImmagine: '' },
+  { id: '7', nome: 'Vieni eliminato per primo in un battle royale', indice: 13, urlImmagine: '' },
+  { id: '8', nome: 'Il tuo internet cade durante una partita ranked', indice: 15, urlImmagine: '' },
+  { id: '9', nome: 'Compri un DLC che si rivela deludente', indice: 17, urlImmagine: '' },
+  { id: '10', nome: 'Dimentichi di salvare e perdi 1 ora di gioco', indice: 19, urlImmagine: '' },
+  { id: '11', nome: 'Vieni bannato per errore per 24 ore', indice: 21, urlImmagine: '' },
+  { id: '12', nome: 'Rompi il controller per la frustrazione', indice: 23, urlImmagine: '' },
+  { id: '13', nome: 'Perdi una partita al torneo amatoriale a causa di un bug', indice: 25, urlImmagine: '' },
+  { id: '14', nome: 'Spendi 50€ in loot box su EA Sports FC e non ottieni nessun giocatore utile', indice: 27, urlImmagine: '' },
+  { id: '15', nome: 'Un amico ti spoilera il finale di Red Dead Redemption 2 che stavi giocando', indice: 29, urlImmagine: '' },
+  { id: '16', nome: 'Vieni escluso da un gruppo raid per il tuo livello basso', indice: 31, urlImmagine: '' },
+  { id: '17', nome: 'Il PC si spegne durante il boss finale di Kingdom Hearts', indice: 33, urlImmagine: '' },
+  { id: '18', nome: 'Compri un gioco a prezzo pieno e il giorno dopo va in saldo al 90%', indice: 35, urlImmagine: '' },
+  { id: '19', nome: 'Il tuo compagno di squadra su EA Sports FC segna un autogol al 90°', indice: 37, urlImmagine: '' },
+  { id: '20', nome: 'Perdi una streak di 50 vittorie consecutive su Rocket League per una disconnessione', indice: 39, urlImmagine: '' },
+  { id: '21', nome: 'Il server del gioco chiude definitivamente e perdi tutto il progresso', indice: 41, urlImmagine: '' },
+  { id: '22', nome: 'Il gioco che aspettavi da anni esce ed è un disastro totale', indice: 43, urlImmagine: '' },
+  { id: '23', nome: 'Vieni derubato di tutti gli oggetti da un "amico" in un gioco online', indice: 45, urlImmagine: '' },
+  { id: '24', nome: 'Scopri che il gioco ha un finale segreto ma hai già cancellato il salvataggio', indice: 47, urlImmagine: '' },
+  { id: '25', nome: 'Il gioco si aggiorna e cancella tutti i tuoi salvataggi', indice: 49, urlImmagine: '' },
+  { id: '26', nome: 'La tua classifica rank viene azzerata per un errore del sistema', indice: 51, urlImmagine: '' },
+  { id: '27', nome: 'Perdi il tuo account da 5 anni per aver dimenticato la password', indice: 53, urlImmagine: '' },
+  { id: '28', nome: 'Il tuo account viene hackerato e perdi tutti gli oggetti rari accumulati', indice: 55, urlImmagine: '' },
+  { id: '29', nome: 'Investi 100€ in skin su Fortnite e il gioco chiude i server', indice: 57, urlImmagine: '' },
+  { id: '30', nome: 'Vieni bannato ingiustamente e il supporto non risponde mai', indice: 59, urlImmagine: '' },
+  { id: '31', nome: 'Perdi una finale di torneo amatoriale perché fanno rigiocare il tuo avversario per un problema tecnico', indice: 61, urlImmagine: '' },
+  { id: '32', nome: 'Il gioco che aspettavi da anni viene rimandato di altri 2 anni', indice: 63, urlImmagine: '' },
+  { id: '33', nome: 'Muori al boss finale di Kingdom Hearts dopo 2 ore di combattimento senza aver salvato', indice: 65, urlImmagine: '' },
+  { id: '34', nome: 'Investi 300€ in skin e il gioco chiude i server definitivamente', indice: 67, urlImmagine: '' },
+  { id: '35', nome: 'Il tuo account con centinaia di euro di oggetti viene bannato per sempre', indice: 69, urlImmagine: '' },
+  { id: '36', nome: 'Un tuo amico ti batte per la prima volta e non smette più di parlarne', indice: 71, urlImmagine: '' },
+  { id: '37', nome: 'Perdi tutti i progressi di Red Dead Redemption 2 per un salvataggio corrotto dopo 80 ore di gioco', indice: 73, urlImmagine: '' },
+  { id: '38', nome: 'Il tuo controller si rompe definitivamente durante la scena finale di un gioco', indice: 75, urlImmagine: '' },
+  { id: '39', nome: 'Compri una console nuova e scopri che il tuo gioco preferito non è compatibile', indice: 77, urlImmagine: '' },
+  { id: '40', nome: 'Vieni doxxato dopo una vittoria in un torneo amatoriale online', indice: 79, urlImmagine: '' },
+  { id: '41', nome: 'Perdi una borsa di studio per i voti crollati a causa del gaming', indice: 81, urlImmagine: '' },
+  { id: '42', nome: 'Il tuo account EA Sports FC con tutte le squadre costruite viene resettato a inizio stagione', indice: 83, urlImmagine: '' },
+  { id: '43', nome: 'Sviluppi una lesione al polso che ti impedisce di giocare per 6 mesi', indice: 85, urlImmagine: '' },
+  { id: '44', nome: 'Perdi il lavoro perché continuavi a giocare durante lo smartworking', indice: 87, urlImmagine: '' },
+  { id: '45', nome: 'Il tuo PC da 2000€ si fulmina durante il primo avvio di Red Dead Redemption 2', indice: 89, urlImmagine: '' },
+  { id: '46', nome: "Il tuo ex ti cancella tutti i salvataggi e l'account prima di lasciarti", indice: 91, urlImmagine: '' },
+  { id: '47', nome: 'Preordini una console da 800€, arriva rotta e il venditore sparisce', indice: 93, urlImmagine: '' },
+  { id: '48', nome: 'Perdi il lavoro e la ragazza nello stesso giorno perché passavi tutto il tempo a giocare', indice: 95, urlImmagine: '' },
+  { id: '49', nome: "La TV da 1500€ comprata apposta per giocare cade e si rompe il giorno stesso dell'acquisto", indice: 97, urlImmagine: '' },
+  { id: '50', nome: "Avvii GTA 6 il giorno dell'uscita dopo 13 anni di attesa e la console esplode bruciando casa", indice: 99, urlImmagine: '' },
+];
+
+function selezionaCarteCasuali(pool, n) {
+  const copia = [...pool];
+  const selezionate = [];
+  for (let i = 0; i < n && copia.length > 0; i++) {
+    const indexCasuale = Math.floor(Math.random() * copia.length);
+    selezionate.push(copia.splice(indexCasuale, 1)[0]);
+  }
+  return selezionate;
+}
+
+function posizioneCorretta(hand, nuovaCarta, posizioneScelta) {
+  const valore = nuovaCarta.indice;
+  if (posizioneScelta === 0) return valore < hand[0].indice;
+  if (posizioneScelta === hand.length) return valore > hand[hand.length - 1].indice;
+  const sinistra = hand[posizioneScelta - 1].indice;
+  const destra = hand[posizioneScelta].indice;
+  return valore > sinistra && valore < destra;
+}
+
+function controllaFinePartita(stato) {
+  const { corrette, errori } = stato;
+  if (corrette === 6) return { finita: true, esito: 'vittoria' };
+  if (errori === 3) return { finita: true, esito: 'sconfitta' };
+  return { finita: false, esito: null };
+}
+
+function Carta({ nome, urlImmagine, indice, visibilitaIndice }) {
+  let indiceVisualizzato = null;
+  if (visibilitaIndice === true) {
+    indiceVisualizzato = <Text style={stileCarta.index}>{indice}</Text>;
+  }
+  return (
+    <View style={stileCarta.carta}>
+      <Image source={{ uri: urlImmagine }} style={stileCarta.immagine} />
+      <Text style={stileCarta.nome}>{nome}</Text>
+      {indiceVisualizzato}
+    </View>
+  );
+}
+
+const stileCarta = StyleSheet.create({
+  carta: { backgroundColor: '#ffffff', borderRadius: 16, marginHorizontal: 8, marginBottom: 12, padding: 10, elevation: 4 },
+  immagine: { height: 80, width: 80, borderRadius: 5, resizeMode: 'cover' },
+  nome: { fontSize: 13, fontWeight: 'bold', color: 'black', marginBottom: 4 },
+  index: { fontSize: 14, color: 'red', fontWeight: '700' },
+});
+
+function HomeScreen({ onPlay }) {
+  return (
+    <View style={stileHome.container}>
+      <Text style={stileHome.title}>IL GIOCO DELLA SFORTUNA</Text>
+      <Text style={stileHome.subtitle}>VIDEOGIOCHI EDITION</Text>
+      <Text style={stileHome.description}>
+        Disponi le carte che ti vengono assegnate in ordine di sfortuna. Classifica gli eventi dal meno sfortunato al più sfortunato.
+      </Text>
+      <TouchableOpacity style={stileHome.button} onPress={onPlay}>
+        <Text style={stileHome.buttonText}>Avvia Partita</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const stileHome = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: '#f5f5f5' },
+  title: { fontSize: 30, fontWeight: 'bold', textAlign: 'center', marginBottom: 16 },
+  subtitle: { fontSize: 20, fontWeight: 'bold', color: 'grey', textAlign: 'center', marginBottom: 16 },
+  description: { fontSize: 16, textAlign: 'center', color: '#555', marginBottom: 24, paddingHorizontal: 16 },
+  button: { paddingVertical: 14, paddingHorizontal: 28, borderRadius: 12, backgroundColor: 'green' },
+  buttonText: { color: 'white', fontSize: 18, fontWeight: '600' },
+});
+
+function GameScreen({ onFine }) {
+  const [mano, setMano] = useState([]);
+  const [errori, setErrori] = useState(0);
+  const [cartaCorrente, setCartaCorrente] = useState(null);
+  const [carteUsate, setCarteUsate] = useState([]);
+  const [finePartita, setFinePartita] = useState(false);
+  const [posizioneScelta, setPosizioneScelta] = useState(null);
+  const [messaggioRound, setMessaggioRound] = useState(null);
+
+  useEffect(() => {
+    inizializzaPartita();
+  }, []);
+
+  function inizializzaPartita() {
+    const nuovaMano = selezionaCarteCasuali(carte, 3);
+    const rimanenti = [];
+    for (let i = 0; i < carte.length; i++) {
+      let trovata = false;
+      for (let j = 0; j < nuovaMano.length; j++) {
+        if (carte[i] === nuovaMano[j]) trovata = true;
+      }
+      if (trovata === false) rimanenti.push(carte[i]);
+    }
+    const nuovaCartaCorrente = selezionaCarteCasuali(rimanenti, 1)[0];
+    setMano(nuovaMano);
+    setCartaCorrente(nuovaCartaCorrente);
+    setCarteUsate([...nuovaMano, nuovaCartaCorrente]);
+  }
+
+  function gestisciScelta(posizione) {
+    const corretta = posizioneCorretta(mano, cartaCorrente, posizione);
+    let nuoveCorrette = mano.length;
+    let nuoviErrori = errori;
+
+    if (corretta === true) {
+      nuoveCorrette = mano.length + 1;
+      setMano([...mano, cartaCorrente]);
+    } else {
+      nuoviErrori = errori + 1;
+      setErrori(nuoviErrori);
+    }
+
+    if (corretta === true) {
+      setMessaggioRound('Corretto! 🎉');
+    } else {
+      setMessaggioRound('Sbagliato! ❌');
+    }
+
+    const stato = { corrette: nuoveCorrette, errori: nuoviErrori };
+    const fine = controllaFinePartita(stato);
+    setFinePartita(fine.finita);
+
+    if (fine.finita === true) {
+      onFine(fine.esito);
+    }
+
+    if (fine.finita === false) {
+      const rimanenti = [];
+      for (let i = 0; i < carte.length; i++) {
+        let usata = false;
+        for (let j = 0; j < carteUsate.length; j++) {
+          if (carte[i] === carteUsate[j]) usata = true;
+        }
+        if (usata === false) rimanenti.push(carte[i]);
+      }
+      const nuovaCarta = selezionaCarteCasuali(rimanenti, 1)[0];
+      setCartaCorrente(nuovaCarta);
+      setCarteUsate([...carteUsate, nuovaCarta]);
+    }
+  }
+
+  let vite = [];
+  for (let i = 0; i < 3; i++) {
+    vite.push(i < errori ? '🤍' : '❤️');
+  }
+
+  const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
+
+  let pulsanti = [];
+  for (let i = 0; i <= mano.length; i++) {
+    pulsanti.push(
+      <TouchableOpacity key={i} style={stileGame.button} onPress={() => gestisciScelta(i)}>
+        <Text style={stileGame.buttonText}>Posizione {i + 1}</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  if (messaggioRound !== null) {
+    return (
+      <View style={stileGame.container}>
+        <Text style={stileGame.messaggio}>{messaggioRound}</Text>
+        <TouchableOpacity style={stileGame.button} onPress={() => setMessaggioRound(null)}>
+          <Text style={stileGame.buttonText}>Continua</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView contentContainerStyle={stileGame.container}>
+      <View style={{ flexDirection: 'row', marginBottom: 16 }}>
+        {vite.map((cuore, index) => (
+          <Text key={index} style={{ fontSize: 28 }}>{cuore}</Text>
+        ))}
+      </View>
+
+      {cartaCorrente && (
+        <Text style={stileGame.nomeCarta}>{cartaCorrente.nome}</Text>
+      )}
+
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', marginVertical: 16 }}>
+        {manoOrdinata.map((carta, index) => (
+          <Carta
+            key={index}
+            nome={carta.nome}
+            urlImmagine={carta.urlImmagine}
+            indice={carta.indice}
+            visibilitaIndice={true}
+          />
+        ))}
+      </View>
+
+      <View style={{ marginTop: 8 }}>
+        {pulsanti}
+      </View>
+    </ScrollView>
+  );
+}
+
+const stileGame = StyleSheet.create({
+  container: { flexGrow: 1, alignItems: 'center', padding: 24, backgroundColor: 'white' },
+  messaggio: { fontSize: 28, fontWeight: 'bold', marginBottom: 24, textAlign: 'center' },
+  nomeCarta: { fontSize: 18, textAlign: 'center', marginVertical: 12, paddingHorizontal: 16, fontWeight: '600' },
+  button: { paddingVertical: 12, paddingHorizontal: 24, borderRadius: 12, backgroundColor: 'green', marginVertical: 6 },
+  buttonText: { color: 'white', fontSize: 16, fontWeight: '600' },
+});
+
+function EndScreen({ esito, onRigioca, onHome }) {
+  return (
+    <View style={stileEnd.container}>
+      <Text style={stileEnd.title}>{esito === 'vittoria' ? '🏆 Hai vinto!' : '💀 Hai perso!'}</Text>
+      <View style={{ gap: 12 }}>
+        <TouchableOpacity style={stileEnd.button} onPress={onRigioca}>
+          <Text style={stileEnd.buttonText}>Riavvia Partita</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={stileEnd.button} onPress={onHome}>
+          <Text style={stileEnd.buttonText}>Torna alla Home</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+const stileEnd = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: 'white' },
+  title: { fontSize: 32, fontWeight: 'bold', textAlign: 'center', marginBottom: 32 },
+  button: { paddingVertical: 14, paddingHorizontal: 28, borderRadius: 12, backgroundColor: 'green', marginVertical: 6 },
+  buttonText: { color: 'white', fontSize: 18, fontWeight: '600' },
+});
+
+
+export default function App() {
+  const [schermata, setSchermata] = useState('home');
+  const [esito, setEsito] = useState(null);
+
+  if (schermata === 'home') {
+    return <HomeScreen onPlay={() => setSchermata('game')} />;
+  }
+
+  if (schermata === 'game') {
+    return (
+      <GameScreen
+        onFine={(risultato) => {
+          setEsito(risultato);
+          setSchermata('end');
+        }}
+      />
+    );
+  }
+
+  if (schermata === 'end') {
+    return (
+      <EndScreen
+        esito={esito}
+        onRigioca={() => setSchermata('game')}
+        onHome={() => setSchermata('home')}
+      />
+    );
+  }
+}
