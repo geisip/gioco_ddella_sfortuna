@@ -3,31 +3,31 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'rea
 
 
 const carte = [
-  { id: '1', nome: 'Perdi una partita online per un lag di 1 secondo', indice: 1, urlImmagine: '' },
-  { id: '2', nome: 'Il tuo personaggio muore per un errore evitabile proprio sul traguardo', indice: 3, urlImmagine: '' },
-  { id: '3', nome: 'Dimentichi di salvare e perdi 10 minuti di gioco', indice: 5, urlImmagine: '' },
-  { id: '4', nome: 'Un compagno di squadra ti fa perdere una partita facile su Rocket League', indice: 7, urlImmagine: '' },
-  { id: '5', nome: 'Finisci le munizioni nel momento peggiore su Fortnite', indice: 9, urlImmagine: '' },
-  { id: '6', nome: 'Il gioco si aggiorna e cambia i controlli che avevi imparato', indice: 11, urlImmagine: '' },
-  { id: '7', nome: 'Vieni eliminato per primo in un battle royale', indice: 13, urlImmagine: '' },
-  { id: '8', nome: 'Il tuo internet cade durante una partita ranked', indice: 15, urlImmagine: '' },
-  { id: '9', nome: 'Compri un DLC che si rivela deludente', indice: 17, urlImmagine: '' },
-  { id: '10', nome: 'Dimentichi di salvare e perdi 1 ora di gioco', indice: 19, urlImmagine: '' },
-  { id: '11', nome: 'Vieni bannato per errore per 24 ore', indice: 21, urlImmagine: '' },
-  { id: '12', nome: 'Rompi il controller per la frustrazione', indice: 23, urlImmagine: '' },
-  { id: '13', nome: 'Perdi una partita al torneo amatoriale a causa di un bug', indice: 25, urlImmagine: '' },
-  { id: '14', nome: 'Spendi 50€ in loot box su EA Sports FC e non ottieni nessun giocatore utile', indice: 27, urlImmagine: '' },
-  { id: '15', nome: 'Un amico ti spoilera il finale di Red Dead Redemption 2 che stavi giocando', indice: 29, urlImmagine: '' },
-  { id: '16', nome: 'Vieni escluso da un gruppo raid per il tuo livello basso', indice: 31, urlImmagine: '' },
-  { id: '17', nome: 'Il PC si spegne durante il boss finale di Kingdom Hearts', indice: 33, urlImmagine: '' },
-  { id: '18', nome: 'Compri un gioco a prezzo pieno e il giorno dopo va in saldo al 90%', indice: 35, urlImmagine: '' },
-  { id: '19', nome: 'Il tuo compagno di squadra su EA Sports FC segna un autogol al 90°', indice: 37, urlImmagine: '' },
-  { id: '20', nome: 'Perdi una streak di 50 vittorie consecutive su Rocket League per una disconnessione', indice: 39, urlImmagine: '' },
-  { id: '21', nome: 'Il server del gioco chiude definitivamente e perdi tutto il progresso', indice: 41, urlImmagine: '' },
-  { id: '22', nome: 'Il gioco che aspettavi da anni esce ed è un disastro totale', indice: 43, urlImmagine: '' },
-  { id: '23', nome: 'Vieni derubato di tutti gli oggetti da un "amico" in un gioco online', indice: 45, urlImmagine: '' },
-  { id: '24', nome: 'Scopri che il gioco ha un finale segreto ma hai già cancellato il salvataggio', indice: 47, urlImmagine: '' },
-  { id: '25', nome: 'Il gioco si aggiorna e cancella tutti i tuoi salvataggi', indice: 49, urlImmagine: '' },
+  { id: '1', nome: 'Perdi una partita online per un lag di 1 secondo', indice: 1, urlImmagine: 'https://i.imgur.com/vt8Pgar.png' },
+  { id: '2', nome: 'Il tuo personaggio muore per un errore evitabile proprio sul traguardo', indice: 3, urlImmagine: 'https://i.imgur.com/V5ar7kP.png' },
+  { id: '3', nome: 'Dimentichi di salvare e perdi 10 minuti di gioco', indice: 5, urlImmagine: 'https://i.imgur.com/xT1e1lA.png' },
+  { id: '4', nome: 'Un compagno di squadra ti fa perdere una partita facile su Rocket League', indice: 7, urlImmagine: 'https://i.imgur.com/B9jj8AQ.png' },
+  { id: '5', nome: 'Finisci le munizioni nel momento peggiore su Fortnite', indice: 9, urlImmagine: 'https://i.imgur.com/eo1Ya2j.png' },
+  { id: '6', nome: 'Il gioco si aggiorna e cambia i controlli che avevi imparato', indice: 11, urlImmagine: 'https://i.imgur.com/wuuZcyR.png' },
+  { id: '7', nome: 'Vieni eliminato per primo in un battle royale', indice: 13, urlImmagine: 'https://i.imgur.com/7cUdFPg.png' },
+  { id: '8', nome: 'Il tuo internet cade durante una partita ranked', indice: 15, urlImmagine: 'https://i.imgur.com/Aku7VpR.png' },
+  { id: '9', nome: 'Compri un DLC che si rivela deludente', indice: 17, urlImmagine: 'https://i.imgur.com/1dd98TV.png' },
+  { id: '10', nome: 'Dimentichi di salvare e perdi 1 ora di gioco', indice: 19, urlImmagine: 'https://i.imgur.com/FwmrfuB.png' },
+  { id: '11', nome: 'Vieni bannato per errore per 24 ore', indice: 21, urlImmagine: 'https://i.imgur.com/8MMx8O7.png' },
+  { id: '12', nome: 'Rompi il controller per la frustrazione', indice: 23, urlImmagine: 'https://i.imgur.com/tZIVhbk.png' },
+  { id: '13', nome: 'Perdi una partita al torneo amatoriale a causa di un bug', indice: 25, urlImmagine: 'https://i.imgur.com/Ix3cV0R.png' },
+  { id: '14', nome: 'Spendi 50€ in loot box su EA Sports FC e non ottieni nessun giocatore utile', indice: 27, urlImmagine: 'https://i.imgur.com/cFhrf41.png' },
+  { id: '15', nome: 'Un amico ti spoilera il finale di Red Dead Redemption 2 che stavi giocando', indice: 29, urlImmagine: 'https://i.imgur.com/Q6K1zo7.png' },
+  { id: '16', nome: 'Vieni escluso da un gruppo raid per il tuo livello basso', indice: 31, urlImmagine: 'https://i.imgur.com/OVWNEc4.png' },
+  { id: '17', nome: 'Il PC si spegne durante il boss finale di Kingdom Hearts', indice: 33, urlImmagine: 'https://i.imgur.com/65bn1qo.png' },
+  { id: '18', nome: 'Compri un gioco a prezzo pieno e il giorno dopo va in saldo al 90%', indice: 35, urlImmagine: 'https://i.imgur.com/y3bQQCW.png' },
+  { id: '19', nome: 'Il tuo compagno di squadra su EA Sports FC segna un autogol al 90°', indice: 37, urlImmagine: 'https://i.imgur.com/yAu22qU.png' },
+  { id: '20', nome: 'Perdi una streak di 50 vittorie consecutive su Rocket League per una disconnessione', indice: 39, urlImmagine: 'https://i.imgur.com/xsSC8ZG.png' },
+  { id: '21', nome: 'Il server del gioco chiude definitivamente e perdi tutto il progresso', indice: 41, urlImmagine: 'https://i.imgur.com/VQF9CZ2.png' },
+  { id: '22', nome: 'Il gioco che aspettavi da anni esce ed è un disastro totale', indice: 43, urlImmagine: 'https://i.imgur.com/nU04o6k_d.png?maxwidth=520&shape=thumb&fidelity=high' },
+  { id: '23', nome: 'Vieni derubato di tutti gli oggetti da un "amico" in un gioco online', indice: 45, urlImmagine: 'https://i.imgur.com/WNfnSLX.png' },
+  { id: '24', nome: 'Scopri che il gioco ha un finale segreto ma hai già cancellato il salvataggio', indice: 47, urlImmagine: 'https://i.imgur.com/46E9uZ4.png' },
+  { id: '25', nome: 'Il gioco si aggiorna e cancella tutti i tuoi salvataggi', indice: 49, urlImmagine: 'https://i.imgur.com/KrEl7Hz.png' },
   { id: '26', nome: 'La tua classifica rank viene azzerata per un errore del sistema', indice: 51, urlImmagine: '' },
   { id: '27', nome: 'Perdi il tuo account da 5 anni per aver dimenticato la password', indice: 53, urlImmagine: '' },
   { id: '28', nome: 'Il tuo account viene hackerato e perdi tutti gli oggetti rari accumulati', indice: 55, urlImmagine: '' },
@@ -156,7 +156,7 @@ function GameScreen({ onFine }) {
   }
 
   function gestisciScelta(posizione) {
-     const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
+    const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
     const corretta = posizioneCorretta(manoOrdinata, cartaCorrente, posizione);
     let nuoveCorrette = mano.length;
     let nuoviErrori = errori;
@@ -298,6 +298,8 @@ export default function App() {
 
   if (schermata === 'game') {
     return (
+
+      
       <GameScreen
         onFine={(risultato) => {
           setEsito(risultato);
