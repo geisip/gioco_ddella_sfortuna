@@ -152,156 +152,156 @@ const carte = [
     indice:49,
     urlImmagine:
       'https://i.imgur.com/KrEl7Hz.png',
-  },{
+  }, {
     id: '26',
     nome: 'La tua classifica rank viene azzerata per un errore del sistema',
     indice:51,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/x8KBQtbf/ID-26.png',
   },{
     id: '27',
     nome: 'Perdi il tuo account da 5 anni per aver dimenticato la password',
     indice:53,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/FFJ3V1SC/ID27-(2).png',
   },{
     id: '28',
     nome: 'Il tuo account viene hackerato e perdi tutti gli oggetti rari accumulati',
     indice:55,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/YqKgnkN3/ID27.png',
   },{
     id: '29',
     nome: 'Investi 100€ in skin su Fortnite e il gioco chiude i server ',
     indice:57,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/pVnzJyj1/ID29.png',
   },{
     id: '30',
     nome: 'Vieni bannato ingiustamente e il supporto non risponde mai ',
     indice:59,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/7PT0nbzs/ID30.png',
   },{
     id: '31',
     nome: 'Perdi una finale di torneo amatoriale perché fanno rigiocare il tuo avversario per un problema tecnico',
     indice:61,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/WpJgwtZX/ID31.png',
   },{
     id: '32',
     nome: 'Il gioco che aspettavi da anni viene rimandato di altri 2 anni',
     indice:63,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/zDRKF3hy/ID32.png',
   },{
     id: '33',
     nome: 'Muori al boss finale di Kingdom Hearts dopo 2 ore di combattimento senza aver salvato',
     indice:65,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/bY2k9dnD/ID33.png',
   },{
     id: '34',
     nome: 'Investi 300€ in skin e il gioco chiude i server definitivamente',
     indice:67,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/gc68Hrhn/ID34.png',
   },{
     id: '35',
     nome: 'Il tuo account con centinaia di euro di oggetti viene bannato per sempre',
     indice:69,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/WzrZNfjj/ID35.png',
   },{
     id: '36',
     nome: 'Un tuo amico ti batte per la prima volta e non smette più di parlarne',
     indice:71,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/j2NfxkTz/ID36.png',
   },{
     id: '37',
     nome: 'Perdi tutti i progressi di Red Dead Redemption 2 per un salvataggio corrotto dopo 80 ore di gioco',
     indice:73,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/NMZTwv34/ID37.png',
   },{
     id: '38',
     nome: 'Il tuo controller si rompe definitivamente durante la scena finale di un gioco',
     indice:75,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/7h7zHQ4S/ID38.png',
   },{
     id: '39',
     nome: 'Compri una console nuova e scopri che il tuo gioco preferito non è compatibile',
     indice:77,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/63FRNxkz/ID39.png',
   },{
     id: '40',
     nome: 'Vieni doxxato dopo una vittoria in un torneo amatoriale online ',
     indice:79,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/7PGYL96f/ID40.png',
   },{
     id: '41',
     nome: 'Perdi una borsa di studio per i voti crollati a causa del gaming',
     indice:81,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/447N3Pd3/ID41.png',
   },{
     id: '42',
     nome: 'Il tuo account EA Sports FC con tutte le squadre costruite viene resettato a inizio stagione',
     indice:83,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/13gKCL5R/ID42.png',
   },{
     id: '43',
     nome: 'Sviluppi una lesione al polso che ti impedisce di giocare per 6 mesi',
     indice:85,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/htH1HpfR/ID43.png',
   },{
     id: '44',
     nome: 'Perdi il lavoro perché continuavi a giocare durante lo smartworking',
     indice:87,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/3N7Lz9fg/ID44.png',
   },{
     id: '45',
     nome: 'Il tuo PC da 2000€ si fulmina durante il primo avvio di Red Dead Redemption 2',
     indice:89,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/C5Yv9Jr4/ID45.png',
   },{
     id: '46',
     nome: 'La tua ex ti cancella tutti i salvataggi e l account prima di lasciarti',
     indice:91,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/d3vWgnN1/ID46.png',
   },{
     id: '47',
     nome: 'Preordini una console da 800€, arriva rotta e il venditore sparisce',
     indice:93,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/fyZH15qk/ID47.png',
   },{
     id: '48',
     nome: 'Perdi il lavoro e la ragazza nello stesso giorno perché passavi tutto il tempo a giocare',
     indice:95,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/Bt9zZ4vx/ID48.png',
   },{
     id: '49',
     nome: 'La TV da 1500€ comprata apposta per giocare cade e si rompe il giorno stesso dell acquisto',
     indice:97,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/MZCZfBMB/ID49.png',
   },{
     id: '50',
     nome: ' Avvii GTA 6 il giorno delluscita dopo 13 anni di attesa e la console esplode bruciando casa ',
     indice:99,
     urlImmagine:
-      'https://i.imgur.com/vt8Pgar.png',
+      'https://i.postimg.cc/JnXgfsrt/ID50.png',
   }
 ];
 
