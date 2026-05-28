@@ -3,67 +3,23 @@ import { StyleSheet, Text, View, Image} from 'react-native';
 
 
 
-const Carta = ({ nome, urlImmagine, indice, visibilitaIndice }) =>{
-
-let indiceVisualizzato = null;
-if (visibilitaIndice === true) {
-  indiceVisualizzato = <Text style={stile.index}>{indice}</Text>;
-}
-
-
-return(
-
-  <View style = {stile.carta}>
-  
-    <Image
-              source={{ uri:urlImmagine }}
-              style={stile.immagine}
-            />
-
-    <Text style={stile.nome}>   {nome}   </Text>
-
+function Carta({ nome, urlImmagine, indice, visibilitaIndice }) {
+  let indiceVisualizzato = null;
+  if (visibilitaIndice === true) {
+    indiceVisualizzato = <Text style={stileCarta.index}>{indice}</Text>;
+  }
+  return (
+    <View style={stileCarta.carta}>
+      <Image source={{ uri: urlImmagine }} style={stileCarta.immagine} />
+      <Text style={stileCarta.nome}>{nome}</Text>
       {indiceVisualizzato}
-  </View>
-)
+    </View>
+  );
 }
 
-export default Carta;
-const stile= StyleSheet.create ({
-
-carta:{
-
-      backgroundColor: '#ffffff',
-    borderRadius: 46,
-    marginHorizontal: 16,
-    marginBottom: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 6,
-
-},
-
-immagine:{
-height:100,
-width:100,
-borderRadius:5,
-  resizeMode: 'cover',
-
-},
-
-  nome: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
-    marginBottom: 6,
-  },
-
-  index: {
-    fontSize: 18,
-    color: 'red',
-    fontWeight: '700',
-    marginBottom: 12,
-  },
-
-})
+const stileCarta = StyleSheet.create({
+  carta: { backgroundColor: '#ffffff', borderRadius: 16, marginHorizontal: 8, marginBottom: 12, padding: 10, elevation: 4 },
+   immagine: {  height: 150, width: '100%',borderRadius: 10, resizeMode: 'contain'}, 
+  nome: { fontSize: 13, fontWeight: 'bold', color: 'black', marginBottom: 4 },
+  index: { fontSize: 14, color: 'red', fontWeight: '700' },
+});

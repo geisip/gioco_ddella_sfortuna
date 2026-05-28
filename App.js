@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
-
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const carte = [
   { id: '1', nome: 'Perdi una partita online per un lag di 1 secondo', indice: 1, urlImmagine: 'https://i.imgur.com/vt8Pgar.png' },
@@ -28,7 +28,7 @@ const carte = [
   { id: '23', nome: 'Vieni derubato di tutti gli oggetti da un "amico" in un gioco online', indice: 45, urlImmagine: 'https://i.imgur.com/WNfnSLX.png' },
   { id: '24', nome: 'Scopri che il gioco ha un finale segreto ma hai già cancellato il salvataggio', indice: 47, urlImmagine: 'https://i.imgur.com/46E9uZ4.png' },
   { id: '25', nome: 'Il gioco si aggiorna e cancella tutti i tuoi salvataggi', indice: 49, urlImmagine: 'https://i.imgur.com/KrEl7Hz.png' },
-    { id: '26', nome: 'La tua classifica rank viene azzerata per un errore del sistema', indice: 51, urlImmagine: 'https://i.postimg.cc/x8KBQtbf/ID-26.png' },
+  { id: '26', nome: 'La tua classifica rank viene azzerata per un errore del sistema', indice: 51, urlImmagine: 'https://i.postimg.cc/x8KBQtbf/ID-26.png' },
   { id: '27', nome: 'Perdi il tuo account da 5 anni per aver dimenticato la password', indice: 53, urlImmagine: 'https://i.postimg.cc/FFJ3V1SC/ID27-(2).png' },
   { id: '28', nome: 'Il tuo account viene hackerato e perdi tutti gli oggetti rari accumulati', indice: 55, urlImmagine: 'https://i.postimg.cc/YqKgnkN3/ID27.png' },
   { id: '29', nome: 'Investi 100€ in skin su Fortnite e il gioco chiude i server', indice: 57, urlImmagine: 'https://i.postimg.cc/pVnzJyj1/ID29.png' },
@@ -54,7 +54,6 @@ const carte = [
   { id: '49', nome: "La TV da 1500€ comprata apposta per giocare cade e si rompe il giorno stesso dell'acquisto", indice: 97, urlImmagine: 'https://i.postimg.cc/MZCZfBMB/ID49.png' },
   { id: '50', nome: "Avvii GTA 6 il giorno dell'uscita dopo 13 anni di attesa e la console esplode bruciando casa", indice: 99, urlImmagine: 'https://i.postimg.cc/JnXgfsrt/ID50.png' },
 ];
-
 
 function selezionaCarteCasuali(pool, n) {
   const copia = [...pool];
@@ -98,7 +97,7 @@ function Carta({ nome, urlImmagine, indice, visibilitaIndice }) {
 
 const stileCarta = StyleSheet.create({
   carta: { backgroundColor: '#ffffff', borderRadius: 16, marginHorizontal: 8, marginBottom: 12, padding: 10, elevation: 4 },
-  immagine: { height: 80, width: 80, borderRadius: 5, resizeMode: 'cover' },
+   immagine: {  height: 150, width: '100%',borderRadius: 10, resizeMode: 'contain'}, 
   nome: { fontSize: 13, fontWeight: 'bold', color: 'black', marginBottom: 4 },
   index: { fontSize: 14, color: 'red', fontWeight: '700' },
 });
@@ -206,14 +205,31 @@ function GameScreen({ onFine }) {
 
   const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
 
-  let pulsanti = [];
-  for (let i = 0; i <= mano.length; i++) {
-    pulsanti.push(
-      <TouchableOpacity key={i} style={stileGame.button} onPress={() => gestisciScelta(i)}>
-        <Text style={stileGame.buttonText}>Posizione {i + 1}</Text>
-      </TouchableOpacity>
-    );
-  }
+let elementiMano = [];
+for (let i = 0; i < manoOrdinata.length; i++) {
+
+  elementiMano.push(
+    <TouchableOpacity key={'btn' + i} style={stileGame.button} onPress={() => gestisciScelta(i)}>
+      <Text style={stileGame.buttonText}>Posizione {i + 1}</Text>
+    </TouchableOpacity>
+  );
+ 
+  elementiMano.push(
+    <Carta
+      key={'carta' + i}
+      nome={manoOrdinata[i].nome}
+      urlImmagine={manoOrdinata[i].urlImmagine}
+      indice={manoOrdinata[i].indice}
+      visibilitaIndice={true}
+    />
+  );
+}
+
+elementiMano.push(
+  <TouchableOpacity key={'btn' + manoOrdinata.length} style={stileGame.button} onPress={() => gestisciScelta(manoOrdinata.length)}>
+    <Text style={stileGame.buttonText}>Posizione {manoOrdinata.length + 1}</Text>
+  </TouchableOpacity>
+);
 
   if (messaggioRound !== null) {
     return (
@@ -226,41 +242,43 @@ function GameScreen({ onFine }) {
     );
   }
 
-  return (
-    <ScrollView contentContainerStyle={stileGame.container}>
-      <View style={{ flexDirection: 'row', marginBottom: 16 }}>
-        {vite.map((cuore, index) => (
-          <Text key={index} style={{ fontSize: 28 }}>{cuore}</Text>
-        ))}
-      </View>
 
-      {cartaCorrente && (
-        <Text style={stileGame.nomeCarta}>{cartaCorrente.nome}</Text>
-      )}
+ return (
+  <SafeAreaProvider>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={{ padding: 16 }}>
+        
+        <View style={{ flexDirection: 'row', marginBottom: 16 }}>
+          {vite.map((cuore, index) => (
+            <Text key={index} style={{ fontSize: 28 }}>{cuore}</Text>
+          ))}
+        </View>
 
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', marginVertical: 16 }}>
-        {manoOrdinata.map((carta, index) => (
-          <Carta
-            key={index}
-            nome={carta.nome}
-            urlImmagine={carta.urlImmagine}
-            indice={carta.indice}
-            visibilitaIndice={true}
+        {cartaCorrente && (
+          <Text style={stileGame.nomeCarta}>{cartaCorrente.nome}</Text>
+        )}
+
+        {cartaCorrente && (
+          <Image
+            source={{ uri: cartaCorrente.urlImmagine }}
+            style={{ width: '100%', height: 200, borderRadius: 12, marginBottom: 16 }}
           />
-        ))}
-      </View>
+        )}
 
-      <View style={{ marginTop: 8 }}>
-        {pulsanti}
-      </View>
-    </ScrollView>
+        <View style={{ width: '100%' }}>
+          {elementiMano}
+        </View>
+
+      </ScrollView>
+    </SafeAreaView>
+  </SafeAreaProvider>
+
   );
 }
 
 const stileGame = StyleSheet.create({
   container: { flexGrow: 1, alignItems: 'center', padding: 24, backgroundColor: 'white' },
   messaggio: { fontSize: 28, fontWeight: 'bold', marginBottom: 24, textAlign: 'center' },
-  nomeCarta: { fontSize: 18, textAlign: 'center', marginVertical: 12, paddingHorizontal: 16, fontWeight: '600' },
   button: { paddingVertical: 12, paddingHorizontal: 24, borderRadius: 12, backgroundColor: 'green', marginVertical: 6 },
   buttonText: { color: 'white', fontSize: 16, fontWeight: '600' },
 });

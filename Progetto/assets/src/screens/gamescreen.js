@@ -1,9 +1,11 @@
 import carte from '../data/card';
 import { selezionaCarteCasuali, posizioneCorretta, controllaFinePartita } from '../utils/gameLogic';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import Carta from '../components/Carta';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView} from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-export default function GameScreen({ onFine }) {
+function GameScreen({ onFine }) {
   const [mano, setMano] = useState([]);
   const [errori, setErrori] = useState(0);
   const [cartaCorrente, setCartaCorrente] = useState(null);
@@ -47,9 +49,9 @@ export default function GameScreen({ onFine }) {
     }
 
     if (corretta === true) {
-      setMessaggioRound('Corretto');
+      setMessaggioRound('Corretto! 🎉');
     } else {
-      setMessaggioRound('Sbagliato');
+      setMessaggioRound('Sbagliato! ❌');
     }
 
     const stato = { corrette: nuoveCorrette, errori: nuoviErrori };
@@ -75,93 +77,87 @@ export default function GameScreen({ onFine }) {
     }
   }
 
-
   let vite = [];
   for (let i = 0; i < 3; i++) {
     vite.push(i < errori ? '🤍' : '❤️');
   }
 
+  const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
 
-  let pulsanti = [];
-  for (let i = 0; i <= mano.length; i++) {
-    pulsanti.push(
-      <TouchableOpacity
-        key={i}
-        style={styles.button}
-        onPress={() => gestisciScelta(i)}>
-        <Text style={styles.buttonText}>Posizione {i + 1}</Text>
-      </TouchableOpacity>
-    );
-  }
+let elementiMano = [];
+for (let i = 0; i < manoOrdinata.length; i++) {
 
+  elementiMano.push(
+    <TouchableOpacity key={'btn' + i} style={stileGame.button} onPress={() => gestisciScelta(i)}>
+      <Text style={stileGame.buttonText}>Posizione {i + 1}</Text>
+    </TouchableOpacity>
+  );
  
+  elementiMano.push(
+    <Carta
+      key={'carta' + i}
+      nome={manoOrdinata[i].nome}
+      urlImmagine={manoOrdinata[i].urlImmagine}
+      indice={manoOrdinata[i].indice}
+      visibilitaIndice={true}
+    />
+  );
+}
+
+elementiMano.push(
+  <TouchableOpacity key={'btn' + manoOrdinata.length} style={stileGame.button} onPress={() => gestisciScelta(manoOrdinata.length)}>
+    <Text style={stileGame.buttonText}>Posizione {manoOrdinata.length + 1}</Text>
+  </TouchableOpacity>
+);
+
   if (messaggioRound !== null) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.messaggio}>{messaggioRound}</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setMessaggioRound(null)}>
-          <Text style={styles.buttonText}>Continua</Text>
+      <View style={stileGame.container}>
+        <Text style={stileGame.messaggio}>{messaggioRound}</Text>
+        <TouchableOpacity style={stileGame.button} onPress={() => setMessaggioRound(null)}>
+          <Text style={stileGame.buttonText}>Continua</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
-  return (
-    <View style={styles.container}>
 
-      <View style={{ flexDirection: 'row' }}>
-        {vite.map((cuore, index) => (
-          <Text key={index} style={{ fontSize: 24 }}>{cuore}</Text>
-        ))}
-      </View>
+ return (
+  <SafeAreaProvider>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={{ padding: 16 }}>
+        
+        <View style={{ flexDirection: 'row', marginBottom: 16 }}>
+          {vite.map((cuore, index) => (
+            <Text key={index} style={{ fontSize: 28 }}>{cuore}</Text>
+          ))}
+        </View>
 
-      {cartaCorrente && <Text style={styles.nomeCarta}>{cartaCorrente.nome}</Text>}
+        {cartaCorrente && (
+          <Text style={stileGame.nomeCarta}>{cartaCorrente.nome}</Text>
+        )}
 
-      {cartaCorrente && (
-        <Image
-          source={{ uri: cartaCorrente.urlImmagine }}
-          style={{ width: 200, height: 200 }}
-        />
-      )}
+        {cartaCorrente && (
+          <Image
+            source={{ uri: cartaCorrente.urlImmagine }}
+            style={{ width: '100%', height: 200, borderRadius: 12, marginBottom: 16 }}
+          />
+        )}
 
-      <View style={{ marginTop: 20 }}>
-        {pulsanti}
-      </View>
+        <View style={{ width: '100%' }}>
+          {elementiMano}
+        </View>
 
-    </View>
+      </ScrollView>
+    </SafeAreaView>
+  </SafeAreaProvider>
+
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, 
-  justifyContent: 'center', 
-  alignItems: 'center',
-   padding: 24,
-    backgroundColor: 'white' 
-    },
-  messaggio: 
-  { fontSize: 28, 
-  fontWeight: 'bold', 
-  marginBottom: 24, 
-  textAlign: 'center' 
-  },
-  nomeCarta: { 
-    fontSize: 18, 
-    textAlign: 'center', 
-    marginVertical: 16, 
-    paddingHorizontal: 16 
-    },
-  button: { paddingVertical: 14, 
-  paddingHorizontal: 28, 
-  borderRadius: 12, 
-  backgroundColor: 'green', 
-  marginVertical: 6 
-  },
-  buttonText: { 
-    color: 'white', 
-  fontSize: 18, 
-  fontWeight: '600' 
-  },
+const stileGame = StyleSheet.create({
+  container: { flexGrow: 1, alignItems: 'center', padding: 24, backgroundColor: 'white' },
+  messaggio: { fontSize: 28, fontWeight: 'bold', marginBottom: 24, textAlign: 'center' },
+  button: { paddingVertical: 12, paddingHorizontal: 24, borderRadius: 12, backgroundColor: 'green', marginVertical: 6 },
+  buttonText: { color: 'white', fontSize: 16, fontWeight: '600' },
 });
