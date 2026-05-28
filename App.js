@@ -42,19 +42,19 @@ const carte = [
   { id: '37', nome: 'Perdi tutti i progressi di Red Dead Redemption 2 per un salvataggio corrotto dopo 80 ore di gioco', indice: 73, urlImmagine: 'https://i.postimg.cc/NMZTwv34/ID37.png' },
   { id: '38', nome: 'Il tuo controller si rompe definitivamente durante la scena finale di un gioco', indice: 75, urlImmagine: 'https://i.postimg.cc/7h7zHQ4S/ID38.png' },
   { id: '39', nome: 'Compri una console nuova e scopri che il tuo gioco preferito non è compatibile', indice: 77, urlImmagine: 'https://i.postimg.cc/63FRNxkz/ID39.png' },
-  { id: '40', nome: 'Vieni doxxato dopo una vittoria in un torneo amatoriale online', indice: 79, urlImmagine: '' },
-  { id: '41', nome: 'Perdi una borsa di studio per i voti crollati a causa del gaming', indice: 81, urlImmagine: '' },
-  { id: '42', nome: 'Il tuo account EA Sports FC con tutte le squadre costruite viene resettato a inizio stagione', indice: 83, urlImmagine: '' },
-  { id: '43', nome: 'Sviluppi una lesione al polso che ti impedisce di giocare per 6 mesi', indice: 85, urlImmagine: '' },
-  { id: '44', nome: 'Perdi il lavoro perché continuavi a giocare durante lo smartworking', indice: 87, urlImmagine: '' },
-  { id: '45', nome: 'Il tuo PC da 2000€ si fulmina durante il primo avvio di Red Dead Redemption 2', indice: 89, urlImmagine: '' },
-  { id: '46', nome: "La tua ex ti cancella tutti i salvataggi e l'account prima di lasciarti", indice: 91, urlImmagine: '' },
-  { id: '47', nome: 'Preordini una console da 800€, arriva rotta e il venditore sparisce', indice: 93, urlImmagine: '' },
-  { id: '48', nome: 'Perdi il lavoro e la ragazza nello stesso giorno perché passavi tutto il tempo a giocare', indice: 95, urlImmagine: '' },
-  { id: '49', nome: "La TV da 1500€ comprata apposta per giocare cade e si rompe il giorno stesso dell'acquisto", indice: 97, urlImmagine: '' },
-  { id: '50', nome: "Avvii GTA 6 il giorno dell'uscita dopo 13 anni di attesa e la console esplode bruciando casa", indice: 99, urlImmagine: '' },
-
+  { id: '40', nome: 'Vieni doxxato dopo una vittoria in un torneo amatoriale online', indice: 79, urlImmagine: 'https://i.postimg.cc/7PGYL96f/ID40.png' },
+  { id: '41', nome: 'Perdi una borsa di studio per i voti crollati a causa del gaming', indice: 81, urlImmagine: 'https://i.postimg.cc/447N3Pd3/ID41.png' },
+  { id: '42', nome: 'Il tuo account EA Sports FC con tutte le squadre costruite viene resettato a inizio stagione', indice: 83, urlImmagine: 'https://i.postimg.cc/13gKCL5R/ID42.png' },
+  { id: '43', nome: 'Sviluppi una lesione al polso che ti impedisce di giocare per 6 mesi', indice: 85, urlImmagine: 'https://i.postimg.cc/htH1HpfR/ID43.png' },
+  { id: '44', nome: 'Perdi il lavoro perché continuavi a giocare durante lo smartworking', indice: 87, urlImmagine: 'https://i.postimg.cc/3N7Lz9fg/ID44.png' },
+  { id: '45', nome: 'Il tuo PC da 2000€ si fulmina durante il primo avvio di Red Dead Redemption 2', indice: 89, urlImmagine: 'https://i.postimg.cc/C5Yv9Jr4/ID45.png' },
+  { id: '46', nome: "La tua ex ti cancella tutti i salvataggi e l'account prima di lasciarti", indice: 91, urlImmagine: 'https://i.postimg.cc/d3vWgnN1/ID46.png' },
+  { id: '47', nome: 'Preordini una console da 800€, arriva rotta e il venditore sparisce', indice: 93, urlImmagine: 'https://i.postimg.cc/fyZH15qk/ID47.png' },
+  { id: '48', nome: 'Perdi il lavoro e la ragazza nello stesso giorno perché passavi tutto il tempo a giocare', indice: 95, urlImmagine: 'https://i.postimg.cc/Bt9zZ4vx/ID48.png' },
+  { id: '49', nome: "La TV da 1500€ comprata apposta per giocare cade e si rompe il giorno stesso dell'acquisto", indice: 97, urlImmagine: 'https://i.postimg.cc/MZCZfBMB/ID49.png' },
+  { id: '50', nome: "Avvii GTA 6 il giorno dell'uscita dopo 13 anni di attesa e la console esplode bruciando casa", indice: 99, urlImmagine: 'https://i.postimg.cc/JnXgfsrt/ID50.png' },
 ];
+
 
 function selezionaCarteCasuali(pool, n) {
   const copia = [...pool];
