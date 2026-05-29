@@ -20,31 +20,9 @@ export default function EndScreen({ esito, onRigioca, onHome }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-    backgroundColor: 'white',
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign:"center",
-    marginBottom: 16,
-  },
-  button: {
-    paddingVertical: 14,
-    paddingHorizontal: 28,
-    borderRadius: 12,
-    backgroundColor:"green",
-       marginHorizontal: 8,
-       
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: '600',
-  },
+const stileEnd = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: '#1a1a2e' },
+  title: { fontSize: 32, fontWeight: 'bold', textAlign: 'center', marginBottom: 32, color: 'white' },
+  button: { paddingVertical: 14, paddingHorizontal: 28, borderRadius: 12, backgroundColor: '#7c3aed', marginVertical: 6 },
+  buttonText: { color: 'white', fontSize: 18, fontWeight: '600' },
 });

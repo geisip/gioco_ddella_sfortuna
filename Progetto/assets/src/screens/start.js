@@ -17,46 +17,11 @@ export default function HomeScreen({ onPlay }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-    backgroundColor: '#f5f5f5',
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign:"center",
-    marginBottom: 16,
-  },
-  subtitle:{
-
-
-     fontSize: 20,
-    fontWeight: 'bold',
-    color:"grey",
-    textAlign:"center",
-    marginBottom: 16,
-
-  },
-  description: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#555',
-    marginBottom: 24,
-    paddingHorizontal: 16,
-  },
-  button: {
-    paddingVertical: 14,
-    paddingHorizontal: 28,
-    borderRadius: 12,
-    backgroundColor:"green"
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: '600',
-  },
+const stileHome = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: '#1a1a2e' },
+  title: { fontSize: 30, fontWeight: 'bold', textAlign: 'center', marginBottom: 16, color: 'white' },
+  subtitle: { fontSize: 20, fontWeight: 'bold', color: '#a78bfa', textAlign: 'center', marginBottom: 16 },
+  description: { fontSize: 16, textAlign: 'center', color: '#aaaacc', marginBottom: 24, paddingHorizontal: 16 },
+  button: { paddingVertical: 14, paddingHorizontal: 28, borderRadius: 12, backgroundColor: '#7c3aed' },
+  buttonText: { color: 'white', fontSize: 18, fontWeight: '600' },
 });

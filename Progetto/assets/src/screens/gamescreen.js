@@ -13,10 +13,44 @@ function GameScreen({ onFine }) {
   const [finePartita, setFinePartita] = useState(false);
   const [posizioneScelta, setPosizioneScelta] = useState(null);
   const [messaggioRound, setMessaggioRound] = useState(null);
-
+  const [timer, setTimer]=useState(30);
   useEffect(() => {
     inizializzaPartita();
   }, []);
+
+
+
+
+    useEffect(() => {
+  if (timer === 0) {
+  setMessaggioRound('Tempo scaduto! ⏰');
+  setErrori(e => e + 1);
+  const stato = { corrette: mano.length, errori: errori + 1 };
+  const fine = controllaFinePartita(stato);
+  if (fine.finita === true) {
+    onFine(fine.esito);
+  }
+  if (fine.finita === false) {
+    const rimanenti = [];
+    for (let i = 0; i < carte.length; i++) {
+      let usata = false;
+      for (let j = 0; j < carteUsate.length; j++) {
+        if (carte[i] === carteUsate[j]) usata = true;
+      }
+      if (usata === false) rimanenti.push(carte[i]);
+    }
+    const nuovaCarta = selezionaCarteCasuali(rimanenti, 1)[0];
+    setCartaCorrente(nuovaCarta);
+    setCarteUsate([...carteUsate, nuovaCarta]);
+  }
+  return;
+}
+  const intervallo = setInterval(() => {
+    setTimer(t => t - 1);
+  }, 1000);
+
+  return () => clearInterval(intervallo);
+}, [timer]);
 
   function inizializzaPartita() {
     const nuovaMano = selezionaCarteCasuali(carte, 3);
@@ -110,28 +144,34 @@ elementiMano.push(
   </TouchableOpacity>
 );
 
-  if (messaggioRound !== null) {
-    return (
-      <View style={stileGame.container}>
-        <Text style={stileGame.messaggio}>{messaggioRound}</Text>
-        <TouchableOpacity style={stileGame.button} onPress={() => setMessaggioRound(null)}>
-          <Text style={stileGame.buttonText}>Continua</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+if (messaggioRound !== null) {
+  return (
+    <View style={stileGame.container}>
+      <Text style={stileGame.messaggio}>{messaggioRound}</Text>
+      <TouchableOpacity 
+        style={stileGame.button} 
+        onPress={() => { setMessaggioRound(null); setTimer(30); }}> 
+        <Text style={stileGame.buttonText}>Continua</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
 
 
- return (
-  <SafeAreaProvider>
+return (
+  <SafeAreaProvider style={{ backgroundColor: '#1a1a2e' }}>
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ padding: 16 }}>
-        
-        <View style={{ flexDirection: 'row', marginBottom: 16 }}>
+      <ScrollView contentContainerStyle={{ padding: 16, backgroundColor: '#1a1a2e' }}>
+
+        <View style={{ flexDirection: 'row', marginBottom: 8 }}>
           {vite.map((cuore, index) => (
             <Text key={index} style={{ fontSize: 28 }}>{cuore}</Text>
           ))}
         </View>
+
+        <Text style={{ fontSize: 24, fontWeight: 'bold', color: timer <= 10 ? 'red' : 'white', marginBottom: 16 }}>
+          ⏱️ {timer}
+        </Text>
 
         {cartaCorrente && (
           <Text style={stileGame.nomeCarta}>{cartaCorrente.nome}</Text>
@@ -151,13 +191,15 @@ elementiMano.push(
       </ScrollView>
     </SafeAreaView>
   </SafeAreaProvider>
-
-  );
+);
 }
 
+   
+
 const stileGame = StyleSheet.create({
-  container: { flexGrow: 1, alignItems: 'center', padding: 24, backgroundColor: 'white' },
-  messaggio: { fontSize: 28, fontWeight: 'bold', marginBottom: 24, textAlign: 'center' },
-  button: { paddingVertical: 12, paddingHorizontal: 24, borderRadius: 12, backgroundColor: 'green', marginVertical: 6 },
+  container: { flexGrow: 1, alignItems: 'center', padding: 24, backgroundColor: '#1a1a2e' },
+  messaggio: { fontSize: 28, fontWeight: 'bold', marginBottom: 24, textAlign: 'center', color: 'white' },
+  nomeCarta: { fontSize: 18, textAlign: 'center', marginVertical: 12, paddingHorizontal: 16, fontWeight: '600', color: 'white' },
+  button: { paddingVertical: 12, paddingHorizontal: 24, borderRadius: 12, backgroundColor: '#7c3aed', marginVertical: 6 },
   buttonText: { color: 'white', fontSize: 16, fontWeight: '600' },
 });
