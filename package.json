@@ -1,0 +1,23 @@
+{
+  "name": "gioco-della-sfortuna",
+  "version": "1.0.0",
+  "description": "Gioco della Sfortuna - React Native",
+  "main": "App.js",
+  "scripts": {
+    "doc": "jsdoc -c nome.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geisip/gioco_ddella_sfortuna.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/geisip/gioco_ddella_sfortuna/issues"
+  },
+  "homepage": "https://github.com/geisip/gioco_ddella_sfortuna#readme",
+  "devDependencies": {
+    "jsdoc": "^4.0.5"
+  }
+}
