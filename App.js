@@ -119,11 +119,38 @@ function HomeScreen({ onPlay }) {
 
 const stileHome = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: '#1a1a2e' },
-  title: { fontSize: 30, fontWeight: 'bold', textAlign: 'center', marginBottom: 16, color: 'white' },
-  subtitle: { fontSize: 20, fontWeight: 'bold', color: '#a78bfa', textAlign: 'center', marginBottom: 16 },
-  description: { fontSize: 16, textAlign: 'center', color: '#aaaacc', marginBottom: 24, paddingHorizontal: 16 },
+ title: {
+  fontSize: 38,
+  fontWeight: '900',
+  textAlign: 'center',
+  color: '#fff',
+  textTransform: 'uppercase',
+  letterSpacing: 2,
+  textShadowColor: '#7c3aed',
+  textShadowOffset: { width: 0, height: 0 },
+  textShadowRadius: 18,
+}, 
+subtitle: {
+  fontSize: 16,
+  fontWeight: '700',
+  color: '#b794f6',
+  letterSpacing: 3,
+  marginTop: -8,
+  marginBottom: 20,
+},
+
+description: {
+  fontSize: 12,
+  fontWeight: '800',
+  color: 'white',
+  letterSpacing: 1,
+  marginBottom: 20,
+},
+
   button: { paddingVertical: 14, paddingHorizontal: 28, borderRadius: 12, backgroundColor: '#7c3aed' },
   buttonText: { color: 'white', fontSize: 18, fontWeight: '600' },
+
+
 });
 
 function GameScreen({ onFine }) {
