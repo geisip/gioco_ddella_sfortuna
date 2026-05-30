@@ -1,22 +1,29 @@
 
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+/**
+ * @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione della schermata finale
+ * @author Jacopo Ricciardi
+ * @description File che implementa la funzione necessaria per la renderizzazione della schermata finale
+ * @function EndScreen
+ * @description Schermata di fine partita con esito e opzioni per continuare
+ * @param {Object} props - Props del componente
+ * @param {string} props.esito - Esito della partita ('vittoria' o 'sconfitta')
+ * @param {Function} props.onRigioca - Callback per avviare una nuova partita
+ * @param {Function} props.onHome - Callback per tornare alla schermata home
+ * @returns {JSX.Element} Schermata di fine partita renderizzata
+ */
 export default function EndScreen({ esito, onRigioca, onHome }) {
   return (
-
-    <View style={styles.container}>
-      <Text style={styles.title}>{esito}</Text>
-      <View style={{gap: 12}}>
-      <TouchableOpacity style={styles.button} onPress={onRigioca}>
-        <Text style={styles.buttonText}>Riavvia Partita</Text>
-      </TouchableOpacity>
-
-       <TouchableOpacity style={styles.button} onPress={onHome}>
-        <Text style={styles.buttonText}>Torna alla home</Text>
-      </TouchableOpacity>
+    <View style={stileEnd.container}>
+      <Text style={stileEnd.title}>{esito === 'vittoria' ? '🏆 Hai vinto!' : '💀 Hai perso!'}</Text>
+      <View style={{ gap: 12 }}>
+        <TouchableOpacity style={stileEnd.button} onPress={onRigioca}>
+          <Text style={stileEnd.buttonText}>Riavvia Partita</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={stileEnd.button} onPress={onHome}>
+          <Text style={stileEnd.buttonText}>Torna alla Home</Text>
+        </TouchableOpacity>
+      </View>
     </View>
-    </View>
-    
   );
 }
 
