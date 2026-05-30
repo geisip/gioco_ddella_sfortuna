@@ -14,6 +14,12 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
  * @property {string} nome - Nome dell'evento sfortunato
  * @property {number} indice - Indice di sfortuna da 1 a 99
  * @property {string} urlImmagine - URL per ottenere  l'immagine
+ *//**
+ * @description Dataset completo delle 50 carte del gioco.
+ * Ogni carta rappresenta una situazione sfortunata a tema videogiochi,
+ * con indice di sfortuna crescente da 1 (banale) a 99 (catastrofico).
+ * Gli indici sono tutti univoci, con differenza minima di 2 tra ogni carta.
+ * @type {Carta[]}
  */
 
 const carte = [

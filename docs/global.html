@@ -94,6 +94,85 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="carte"><span class="type-signature">(constant) </span>carte<span class="type-signature"> :Array.&lt;<a href="global.html#Carta">Carta</a>></span></h4>
+
+
+
+
+<div class="description">
+    <p>Dataset completo delle 50 carte del gioco.
+Ogni carta rappresenta una situazione sfortunata a tema videogiochi,
+con indice di sfortuna crescente da 1 (banale) a 99 (catastrofico).
+Gli indici sono tutti univoci, con differenza minima di 2 tra ogni carta.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;<a href="global.html#Carta">Carta</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -156,7 +235,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line439">line 439</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line504">line 504</a>
     </li></ul></dd>
     
 
@@ -440,7 +519,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line125">line 125</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line140">line 140</a>
     </li></ul></dd>
     
 
@@ -985,7 +1064,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line404">line 404</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line467">line 467</a>
     </li></ul></dd>
     
 
@@ -1461,7 +1540,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line193">line 193</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line213">line 213</a>
     </li></ul></dd>
     
 
@@ -1891,7 +1970,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line159">line 159</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line177">line 177</a>
     </li></ul></dd>
     
 
@@ -2172,7 +2251,9 @@
 
 
 <div class="description">
-    <p>Controlla se la partita è terminata per vittoria o sconfitta</p>
+    <p>Controlla se la partita è terminata verificando le condizioni di vittoria e sconfitta.
+La partita termina con vittoria quando il giocatore raccoglie 6 carte corrette,
+e con sconfitta quando commette 3 errori (inclusi i timeout del timer).</p>
 </div>
 
 
@@ -2265,7 +2346,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line112">line 112</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line125">line 125</a>
     </li></ul></dd>
     
 
@@ -2490,7 +2571,10 @@
 
 
 <div class="description">
-    <p>Gestisce la scelta del giocatore per il posizionamento della carta</p>
+    <p>Gestisce la risposta del giocatore quando sceglie una posizione per la carta.
+Verifica la correttezza della posizione, aggiorna mano ed errori di conseguenza,
+mostra il messaggio di round, controlla se la partita è finita e se no
+seleziona una nuova carta per il round successivo evitando quelle già usate.</p>
 </div>
 
 
@@ -2583,7 +2667,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line275">line 275</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line315">line 315</a>
     </li></ul></dd>
     
 
@@ -2764,7 +2848,9 @@
 
 
 <div class="description">
-    <p>Avvia una nuova partita con 3 carte iniziali</p>
+    <p>Avvia una nuova partita selezionando 3 carte casuali iniziali per la mano
+del giocatore e una quarta carta come primo round. Aggiorna gli stati mano,
+cartaCorrente e carteUsate per riflettere lo stato iniziale della partita.</p>
 </div>
 
 
@@ -2808,7 +2894,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line255">line 255</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line293">line 293</a>
     </li></ul></dd>
     
 
@@ -2940,7 +3026,13 @@
 
 
 <div class="description">
-    <p>Verifica se la posizione scelta dal giocatore è corretta</p>
+    <p>Verifica se la posizione scelta dal giocatore è corretta rispetto all'indice della carta.
+Gestisce tre casi distinti:</p>
+<ul>
+<li>Posizione 0: la carta deve avere indice minore di tutte le carte in mano</li>
+<li>Posizione uguale alla lunghezza della mano: la carta deve avere indice maggiore di tutte</li>
+<li>Posizione intermedia: la carta deve avere indice compreso tra la carta a sinistra e quella a destra</li>
+</ul>
 </div>
 
 
@@ -3079,7 +3171,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line94">line 94</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -3350,7 +3442,9 @@
 
 
 <div class="description">
-    <p>Seleziona le carte casuali da un pool evitando doppioni</p>
+    <p>Seleziona n carte casuali da un pool senza duplicati.
+Utilizza il metodo splice per rimuovere le carte già selezionate dal pool temporaneo,
+garantendo che non vengano estratte due volte la stessa carta.</p>
 </div>
 
 
@@ -3473,7 +3567,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="App.js.html">App.js</a>, <a href="App.js.html#line72">line 72</a>
+        <a href="App.js.html">App.js</a>, <a href="App.js.html#line79">line 79</a>
     </li></ul></dd>
     
 
@@ -3923,13 +4017,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EndScreen">EndScreen</a></li><li><a href="global.html#GameScreen">GameScreen</a></li><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#controllaFinePartita">controllaFinePartita</a></li><li><a href="global.html#gestisciScelta">gestisciScelta</a></li><li><a href="global.html#inizializzaPartita">inizializzaPartita</a></li><li><a href="global.html#posizioneCorretta">posizioneCorretta</a></li><li><a href="global.html#selezionaCarteCasuali">selezionaCarteCasuali</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EndScreen">EndScreen</a></li><li><a href="global.html#GameScreen">GameScreen</a></li><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#carte">carte</a></li><li><a href="global.html#controllaFinePartita">controllaFinePartita</a></li><li><a href="global.html#gestisciScelta">gestisciScelta</a></li><li><a href="global.html#inizializzaPartita">inizializzaPartita</a></li><li><a href="global.html#posizioneCorretta">posizioneCorretta</a></li><li><a href="global.html#selezionaCarteCasuali">selezionaCarteCasuali</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat May 30 2026 14:39:35 GMT+0200 (Ora legale dell’Europa centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat May 30 2026 14:55:31 GMT+0200 (Ora legale dell’Europa centrale)
 </footer>
 
 <script> prettyPrint(); </script>

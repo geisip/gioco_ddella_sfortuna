@@ -8,7 +8,11 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 /**
  *  @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione della schermata di gioco
  * @author Jacopo Ricciardi
- * @description File che implementa la funzione necessaria per la renderizzazione della schermata di gioco
+ * @description Schermata principale di gioco che gestisce l'intera logica dei round.
+ * Inizializza la partita con 3 carte casuali, gestisce il timer da 30 secondi,
+ * mostra la carta del round (senza indice), permette al giocatore di scegliere
+ * la posizione tra le carte possedute, e verifica la correttezza della scelta.
+ * Alterna la visualizzazione tra la schermata di gioco e il messaggio di fine round.
  * @function GameScreen
  * @description Schermata principale di gioco che gestisce tutta la logica dei round
  * @param {Object} props - Props del componente
@@ -33,9 +37,23 @@ function GameScreen({ onFine }) {
   /** @type {[number, Function]} Secondi rimanenti nel timer */
   const [timer, setTimer] = useState(30);
 
+
+  /**
+   * @description Effetto che inizializza la partita al primo render del componente.
+   * Viene eseguito una sola volta grazie all'array di dipendenze vuoto [].
+   */
+
   useEffect(() => {
     inizializzaPartita();
   }, []);
+
+
+    /**
+   * @description Effetto che gestisce il conto alla rovescia del timer.
+   * Si riesegue ogni volta che il valore del timer cambia.
+   * Quando timer arriva a 0 gestisce il timeout come un errore.
+   * Pulisce l'intervallo precedente prima di crearne uno nuovo per evitare memory leak.
+   */
 
   useEffect(() => {
     if (timer === 0) {
@@ -69,7 +87,9 @@ function GameScreen({ onFine }) {
 
   /**
    * @function inizializzaPartita
-   * @description Avvia una nuova partita con 3 carte iniziali
+   * @description Avvia una nuova partita selezionando 3 carte casuali iniziali per la mano
+   * del giocatore e una quarta carta come primo round. Aggiorna gli stati mano,
+   * cartaCorrente e carteUsate per riflettere lo stato iniziale della partita.
    */
   function inizializzaPartita() {
     const nuovaMano = selezionaCarteCasuali(carte, 3);
@@ -89,7 +109,10 @@ function GameScreen({ onFine }) {
 
   /**
    * @function gestisciScelta
-   * @description Gestisce la scelta del giocatore per il posizionamento della carta
+  * @description Gestisce la risposta del giocatore quando sceglie una posizione per la carta.
+   * Verifica la correttezza della posizione, aggiorna mano ed errori di conseguenza,
+   * mostra il messaggio di round, controlla se la partita è finita e se no
+   * seleziona una nuova carta per il round successivo evitando quelle già usate.
    * @param {number} posizione - Posizione scelta dal giocatore
    */
   function gestisciScelta(posizione) {
@@ -135,13 +158,34 @@ function GameScreen({ onFine }) {
     }
   }
 
+
+    /**
+   * @description Calcola la visualizzazione delle vite rimanenti come emoji.
+   * ❤️ = vita disponibile, 🤍 = vita persa.
+   * @type {string[]}
+   */
+
   let vite = [];
   for (let i = 0; i < 3; i++) {
     vite.push(i < errori ? '🤍' : '❤️');
   }
 
+  /**
+   * @description Copia ordinata della mano del giocatore per indice crescente.
+   * Usata sia per la visualizzazione che per la verifica della posizione corretta.
+   * @type {Carta[]}
+   */
+
   const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
 
+
+    /**
+   * @description Array di elementi JSX che alterna pulsanti di posizione e componenti Carta.
+   * Struttura: [btn0, carta0, btn1, carta1, ..., btnN] dove N = mano.length.
+   * I pulsanti permettono al giocatore di scegliere dove inserire la nuova carta.
+   * @type {JSX.Element[]}
+   */
+  
   let elementiMano = [];
   for (let i = 0; i < manoOrdinata.length; i++) {
     elementiMano.push(

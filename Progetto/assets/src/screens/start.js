@@ -4,7 +4,9 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 /**
  *  * @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione della schermata home
  * @author Jacopo Ricciardi
- * @description File che implementa la funzione necessaria per la renderizzazione della schermata home
+ * @description Schermata iniziale dell'applicazione mostrata al primo avvio e dopo ogni partita.
+ * Presenta il titolo del gioco, il tema videogiochi, una breve descrizione delle regole
+ * e il pulsante per avviare una nuova partita.
  * @function HomeScreen
  * @description Schermata home dell'app
  * @param {Object} props - Props del componente

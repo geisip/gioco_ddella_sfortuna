@@ -6,7 +6,10 @@ import { StyleSheet, Text, View, Image} from 'react-native';
 **
  * @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione estetica delle carte
  * @author Jacopo Ricciardi
- * @description File che implementa le funzioni logiche necessarie per il funzionamento del gioco
+ * @description Componente React Native che rappresenta visivamente una singola carta del gioco.
+ * Mostra l'immagine della situazione sfortunata, il nome dell'evento e opzionalmente
+ * l'indice di sfortuna. L'indice viene nascosto durante il round attivo per mantenere
+ * la sfida, e mostrato solo per le carte già in possesso del giocatore.
  * @function Carta
  * @description Componente che rappresenta visivamente una singola carta
  * @param {Object} props - Props del componente

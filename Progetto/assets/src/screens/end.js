@@ -2,7 +2,9 @@
 /**
  * @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione della schermata finale
  * @author Jacopo Ricciardi
- * @description File che implementa la funzione necessaria per la renderizzazione della schermata finale
+* @description Schermata di fine partita mostrata dopo vittoria o sconfitta.
+ * Visualizza l'esito con emoji appropriate (🏆 per vittoria, 💀 per sconfitta)
+ * e offre due opzioni: ricominciare una nuova partita o tornare alla schermata home.
  * @function EndScreen
  * @description Schermata di fine partita con esito e opzioni per continuare
  * @param {Object} props - Props del componente

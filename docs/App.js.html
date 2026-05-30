@@ -43,6 +43,13 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
  * @property {number} indice - Indice di sfortuna da 1 a 99
  * @property {string} urlImmagine - URL per ottenere  l'immagine
  */
+/**
+ * @description Dataset completo delle 50 carte del gioco.
+ * Ogni carta rappresenta una situazione sfortunata a tema videogiochi,
+ * con indice di sfortuna crescente da 1 (banale) a 99 (catastrofico).
+ * Gli indici sono tutti univoci, con differenza minima di 2 tra ogni carta.
+ * @type {Carta[]}
+ */
 
 const carte = [
   { id: '1', nome: 'Perdi una partita online per un lag di 1 secondo', indice: 1, urlImmagine: 'https://i.imgur.com/vt8Pgar.png' },
@@ -103,7 +110,9 @@ const carte = [
  * @description File che implementa le funzioni logiche necessarie per il funzionamento del gioco
  *
  * @function selezionaCarteCasuali
- * @description Seleziona le carte casuali da un pool evitando doppioni
+  * @description Seleziona n carte casuali da un pool senza duplicati.
+ * Utilizza il metodo splice per rimuovere le carte già selezionate dal pool temporaneo,
+ * garantendo che non vengano estratte due volte la stessa carta.
  * @param {Carta[]} pool - Array di tutte le carte disponibili
  * @param {number} n - Numero di carte da selezionare
  * @returns {Carta[]} Array di carte casuali
@@ -122,7 +131,11 @@ function selezionaCarteCasuali(pool, n) {
   /**
 
  * @function posizioneCorretta
- * @description Verifica se la posizione scelta dal giocatore è corretta
+ * @description Verifica se la posizione scelta dal giocatore è corretta rispetto all'indice della carta.
+ * Gestisce tre casi distinti:
+ * - Posizione 0: la carta deve avere indice minore di tutte le carte in mano
+ * - Posizione uguale alla lunghezza della mano: la carta deve avere indice maggiore di tutte
+ * - Posizione intermedia: la carta deve avere indice compreso tra la carta a sinistra e quella a destra
  * @param {Carta[]} hand - Array delle carte in mano ordinate per indice crescente
  * @param {Carta} nuovaCarta - La carta da posizionare nel mazzo tra quelle gia possedute
  * @param {number} posizioneScelta - La posizione scelta dal giocatore (0 = prima di tutto)
@@ -139,7 +152,9 @@ function posizioneCorretta(hand, nuovaCarta, posizioneScelta) {
 
 /**
  * @function controllaFinePartita
- * @description Controlla se la partita è terminata per vittoria o sconfitta
+ * @description Controlla se la partita è terminata verificando le condizioni di vittoria e sconfitta.
+ * La partita termina con vittoria quando il giocatore raccoglie 6 carte corrette,
+ * e con sconfitta quando commette 3 errori (inclusi i timeout del timer).
  * @param {{corrette: number, errori: number}} stato - Stato corrente della partita
  * @returns {{finita: boolean, esito: string|null}} Oggetto con esito della partita
  */
@@ -153,7 +168,10 @@ function controllaFinePartita(stato) {
 /**
  * @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione estetica delle carte
  * @author Jacopo Ricciardi
- * @description File che implementa le funzioni logiche necessarie per il funzionamento del gioco
+ * @description Componente React Native che rappresenta visivamente una singola carta del gioco.
+ * Mostra l'immagine della situazione sfortunata, il nome dell'evento e opzionalmente
+ * l'indice di sfortuna. L'indice viene nascosto durante il round attivo per mantenere
+ * la sfida, e mostrato solo per le carte già in possesso del giocatore.
  * @function Carta
  * @description Componente che rappresenta visivamente una singola carta
  * @param {Object} props - Props del componente
@@ -187,7 +205,9 @@ const stileCarta = StyleSheet.create({
 /**
  * @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione della schermata home
  * @author Jacopo Ricciardi
- * @description File che implementa la funzione necessaria per la renderizzazione della schermata home
+ * @description Schermata iniziale dell'applicazione mostrata al primo avvio e dopo ogni partita.
+ * Presenta il titolo del gioco, il tema videogiochi, una breve descrizione delle regole
+ * e il pulsante per avviare una nuova partita.
  * @function HomeScreen
  * @description Schermata home dell'app
  * @param {Object} props - Props del componente
@@ -221,7 +241,11 @@ const stileHome = StyleSheet.create({
 /**
  *  @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione della schermata di gioco
  * @author Jacopo Ricciardi
- * @description File che implementa la funzione necessaria per la renderizzazione della schermata di gioco
+* @description Schermata principale di gioco che gestisce l'intera logica dei round.
+ * Inizializza la partita con 3 carte casuali, gestisce il timer da 30 secondi,
+ * mostra la carta del round (senza indice), permette al giocatore di scegliere
+ * la posizione tra le carte possedute, e verifica la correttezza della scelta.
+ * Alterna la visualizzazione tra la schermata di gioco e il messaggio di fine round.
  * @function GameScreen
  * @description Schermata principale di gioco che gestisce tutta la logica dei round
  * @param {Object} props - Props del componente
@@ -246,9 +270,23 @@ function GameScreen({ onFine }) {
   /** @type {[number, Function]} Secondi rimanenti nel timer */
   const [timer, setTimer] = useState(30);
 
+
+  /**
+   * @description Effetto che inizializza la partita al primo render del componente.
+   * Viene eseguito una sola volta grazie all'array di dipendenze vuoto [].
+   */
+
   useEffect(() => {
     inizializzaPartita();
   }, []);
+
+
+    /**
+   * @description Effetto che gestisce il conto alla rovescia del timer.
+   * Si riesegue ogni volta che il valore del timer cambia.
+   * Quando timer arriva a 0 gestisce il timeout come un errore.
+   * Pulisce l'intervallo precedente prima di crearne uno nuovo per evitare memory leak.
+   */
 
   useEffect(() => {
     if (timer === 0) {
@@ -282,7 +320,9 @@ function GameScreen({ onFine }) {
 
   /**
    * @function inizializzaPartita
-   * @description Avvia una nuova partita con 3 carte iniziali
+  * @description Avvia una nuova partita selezionando 3 carte casuali iniziali per la mano
+   * del giocatore e una quarta carta come primo round. Aggiorna gli stati mano,
+   * cartaCorrente e carteUsate per riflettere lo stato iniziale della partita.
    */
   function inizializzaPartita() {
     const nuovaMano = selezionaCarteCasuali(carte, 3);
@@ -302,7 +342,10 @@ function GameScreen({ onFine }) {
 
   /**
    * @function gestisciScelta
-   * @description Gestisce la scelta del giocatore per il posizionamento della carta
+    * @description Gestisce la risposta del giocatore quando sceglie una posizione per la carta.
+   * Verifica la correttezza della posizione, aggiorna mano ed errori di conseguenza,
+   * mostra il messaggio di round, controlla se la partita è finita e se no
+   * seleziona una nuova carta per il round successivo evitando quelle già usate.
    * @param {number} posizione - Posizione scelta dal giocatore
    */
   function gestisciScelta(posizione) {
@@ -348,12 +391,32 @@ function GameScreen({ onFine }) {
     }
   }
 
+    /**
+   * @description Calcola la visualizzazione delle vite rimanenti come emoji.
+   * ❤️ = vita disponibile, 🤍 = vita persa.
+   * @type {string[]}
+   */
+
   let vite = [];
   for (let i = 0; i &lt; 3; i++) {
     vite.push(i &lt; errori ? '🤍' : '❤️');
   }
 
+  /**
+   * @description Copia ordinata della mano del giocatore per indice crescente.
+   * Usata sia per la visualizzazione che per la verifica della posizione corretta.
+   * @type {Carta[]}
+   */
+
   const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
+
+
+    /**
+   * @description Array di elementi JSX che alterna pulsanti di posizione e componenti Carta.
+   * Struttura: [btn0, carta0, btn1, carta1, ..., btnN] dove N = mano.length.
+   * I pulsanti permettono al giocatore di scegliere dove inserire la nuova carta.
+   * @type {JSX.Element[]}
+   */
 
   let elementiMano = [];
   for (let i = 0; i &lt; manoOrdinata.length; i++) {
@@ -432,7 +495,9 @@ const stileGame = StyleSheet.create({
 /**
  * @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione della schermata finale
  * @author Jacopo Ricciardi
- * @description File che implementa la funzione necessaria per la renderizzazione della schermata finale
+* @description Schermata di fine partita mostrata dopo vittoria o sconfitta.
+ * Visualizza l'esito con emoji appropriate (🏆 per vittoria, 💀 per sconfitta)
+ * e offre due opzioni: ricominciare una nuova partita o tornare alla schermata home.
  * @function EndScreen
  * @description Schermata di fine partita con esito e opzioni per continuare
  * @param {Object} props - Props del componente
@@ -509,13 +574,13 @@ export default function App() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EndScreen">EndScreen</a></li><li><a href="global.html#GameScreen">GameScreen</a></li><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#controllaFinePartita">controllaFinePartita</a></li><li><a href="global.html#gestisciScelta">gestisciScelta</a></li><li><a href="global.html#inizializzaPartita">inizializzaPartita</a></li><li><a href="global.html#posizioneCorretta">posizioneCorretta</a></li><li><a href="global.html#selezionaCarteCasuali">selezionaCarteCasuali</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EndScreen">EndScreen</a></li><li><a href="global.html#GameScreen">GameScreen</a></li><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#carte">carte</a></li><li><a href="global.html#controllaFinePartita">controllaFinePartita</a></li><li><a href="global.html#gestisciScelta">gestisciScelta</a></li><li><a href="global.html#inizializzaPartita">inizializzaPartita</a></li><li><a href="global.html#posizioneCorretta">posizioneCorretta</a></li><li><a href="global.html#selezionaCarteCasuali">selezionaCarteCasuali</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat May 30 2026 14:39:35 GMT+0200 (Ora legale dell’Europa centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat May 30 2026 14:55:31 GMT+0200 (Ora legale dell’Europa centrale)
 </footer>
 
 <script> prettyPrint(); </script>
