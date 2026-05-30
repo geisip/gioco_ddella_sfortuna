@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Progetto/assets/src/screens/gamescreen.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Progetto/assets/src/screens/gamescreen.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import carte from '../data/card';
+import { selezionaCarteCasuali, posizioneCorretta, controllaFinePartita } from '../utils/gameLogic';
+import Carta from '../components/Carta';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+/**
+ *  @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi, file per la gestione della schermata di gioco
+ * @author Jacopo Ricciardi
+ * @description File che implementa la funzione necessaria per la renderizzazione della schermata di gioco
+ * @function GameScreen
+ * @description Schermata principale di gioco che gestisce tutta la logica dei round
+ * @param {Object} props - Props del componente
+ * @param {Function} props.onFine - Callback chiamata quando la partita termina con l'esito
+ * @returns {JSX.Element} Schermata di gioco renderizzata
+ */
+function GameScreen({ onFine }) {
+  /** @type {[Carta[], Function]} Carte in possesso del giocatore */
+  const [mano, setMano] = useState([]);
+  /** @type {[number, Function]} Numero di errori commessi */
+  const [errori, setErrori] = useState(0);
+  /** @type {[Carta|null, Function]} Carta del round corrente */
+  const [cartaCorrente, setCartaCorrente] = useState(null);
+  /** @type {[Carta[], Function]} Carte già utilizzate nei round precedenti */
+  const [carteUsate, setCarteUsate] = useState([]);
+  /** @type {[boolean, Function]} Stato di fine partita */
+  const [finePartita, setFinePartita] = useState(false);
+  /** @type {[number|null, Function]} Posizione scelta dal giocatore */
+  const [posizioneScelta, setPosizioneScelta] = useState(null);
+  /** @type {[string|null, Function]} Messaggio da mostrare tra i round */
+  const [messaggioRound, setMessaggioRound] = useState(null);
+  /** @type {[number, Function]} Secondi rimanenti nel timer */
+  const [timer, setTimer] = useState(30);
+
+  useEffect(() => {
+    inizializzaPartita();
+  }, []);
+
+  useEffect(() => {
+    if (timer === 0) {
+      setMessaggioRound('Tempo scaduto! ⏰');
+      setErrori(e => e + 1);
+      const stato = { corrette: mano.length, errori: errori + 1 };
+      const fine = controllaFinePartita(stato);
+      if (fine.finita === true) {
+        onFine(fine.esito);
+      }
+      if (fine.finita === false) {
+        const rimanenti = [];
+        for (let i = 0; i &lt; carte.length; i++) {
+          let usata = false;
+          for (let j = 0; j &lt; carteUsate.length; j++) {
+            if (carte[i] === carteUsate[j]) usata = true;
+          }
+          if (usata === false) rimanenti.push(carte[i]);
+        }
+        const nuovaCarta = selezionaCarteCasuali(rimanenti, 1)[0];
+        setCartaCorrente(nuovaCarta);
+        setCarteUsate([...carteUsate, nuovaCarta]);
+      }
+      return;
+    }
+    const intervallo = setInterval(() => {
+      setTimer(t => t - 1);
+    }, 1000);
+    return () => clearInterval(intervallo);
+  }, [timer]);
+
+  /**
+   * @function inizializzaPartita
+   * @description Avvia una nuova partita con 3 carte iniziali
+   */
+  function inizializzaPartita() {
+    const nuovaMano = selezionaCarteCasuali(carte, 3);
+    const rimanenti = [];
+    for (let i = 0; i &lt; carte.length; i++) {
+      let trovata = false;
+      for (let j = 0; j &lt; nuovaMano.length; j++) {
+        if (carte[i] === nuovaMano[j]) trovata = true;
+      }
+      if (trovata === false) rimanenti.push(carte[i]);
+    }
+    const nuovaCartaCorrente = selezionaCarteCasuali(rimanenti, 1)[0];
+    setMano(nuovaMano);
+    setCartaCorrente(nuovaCartaCorrente);
+    setCarteUsate([...nuovaMano, nuovaCartaCorrente]);
+  }
+
+  /**
+   * @function gestisciScelta
+   * @description Gestisce la scelta del giocatore per il posizionamento della carta
+   * @param {number} posizione - Posizione scelta dal giocatore
+   */
+  function gestisciScelta(posizione) {
+    const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
+    const corretta = posizioneCorretta(manoOrdinata, cartaCorrente, posizione);
+    let nuoveCorrette = mano.length;
+    let nuoviErrori = errori;
+
+    if (corretta === true) {
+      nuoveCorrette = mano.length + 1;
+      setMano([...mano, cartaCorrente]);
+    } else {
+      nuoviErrori = errori + 1;
+      setErrori(nuoviErrori);
+    }
+
+    if (corretta === true) {
+      setMessaggioRound('Corretto! 🎉');
+    } else {
+      setMessaggioRound('Sbagliato! ❌');
+    }
+
+    const stato = { corrette: nuoveCorrette, errori: nuoviErrori };
+    const fine = controllaFinePartita(stato);
+    setFinePartita(fine.finita);
+
+    if (fine.finita === true) {
+      onFine(fine.esito);
+    }
+
+    if (fine.finita === false) {
+      const rimanenti = [];
+      for (let i = 0; i &lt; carte.length; i++) {
+        let usata = false;
+        for (let j = 0; j &lt; carteUsate.length; j++) {
+          if (carte[i] === carteUsate[j]) usata = true;
+        }
+        if (usata === false) rimanenti.push(carte[i]);
+      }
+      const nuovaCarta = selezionaCarteCasuali(rimanenti, 1)[0];
+      setCartaCorrente(nuovaCarta);
+      setCarteUsate([...carteUsate, nuovaCarta]);
+    }
+  }
+
+  let vite = [];
+  for (let i = 0; i &lt; 3; i++) {
+    vite.push(i &lt; errori ? '🤍' : '❤️');
+  }
+
+  const manoOrdinata = [...mano].sort((a, b) => a.indice - b.indice);
+
+  let elementiMano = [];
+  for (let i = 0; i &lt; manoOrdinata.length; i++) {
+    elementiMano.push(
+      &lt;TouchableOpacity key={'btn' + i} style={stileGame.button} onPress={() => gestisciScelta(i)}>
+        &lt;Text style={stileGame.buttonText}>Posizione {i + 1}&lt;/Text>
+      &lt;/TouchableOpacity>
+    );
+    elementiMano.push(
+      &lt;Carta
+        key={'carta' + i}
+        nome={manoOrdinata[i].nome}
+        urlImmagine={manoOrdinata[i].urlImmagine}
+        indice={manoOrdinata[i].indice}
+        visibilitaIndice={true}
+      />
+    );
+  }
+  elementiMano.push(
+    &lt;TouchableOpacity key={'btn' + manoOrdinata.length} style={stileGame.button} onPress={() => gestisciScelta(manoOrdinata.length)}>
+      &lt;Text style={stileGame.buttonText}>Posizione {manoOrdinata.length + 1}&lt;/Text>
+    &lt;/TouchableOpacity>
+  );
+
+  if (messaggioRound !== null) {
+    return (
+      &lt;View style={stileGame.container}>
+        &lt;Text style={stileGame.messaggio}>{messaggioRound}&lt;/Text>
+        &lt;TouchableOpacity
+          style={stileGame.button}
+          onPress={() => { setMessaggioRound(null); setTimer(30); }}>
+          &lt;Text style={stileGame.buttonText}>Continua&lt;/Text>
+        &lt;/TouchableOpacity>
+      &lt;/View>
+    );
+  }
+
+  return (
+    &lt;SafeAreaProvider style={{ backgroundColor: '#1a1a2e' }}>
+      &lt;SafeAreaView style={{ flex: 1 }}>
+        &lt;ScrollView contentContainerStyle={{ padding: 16, backgroundColor: '#1a1a2e' }}>
+          &lt;View style={{ flexDirection: 'row', marginBottom: 8 }}>
+            {vite.map((cuore, index) => (
+              &lt;Text key={index} style={{ fontSize: 28 }}>{cuore}&lt;/Text>
+            ))}
+          &lt;/View>
+          &lt;Text style={{ fontSize: 24, fontWeight: 'bold', color: timer &lt;= 10 ? 'red' : 'white', marginBottom: 16 }}>
+            ⏱️ {timer}
+          &lt;/Text>
+          {cartaCorrente &amp;&amp; (
+            &lt;Text style={stileGame.nomeCarta}>{cartaCorrente.nome}&lt;/Text>
+          )}
+          {cartaCorrente &amp;&amp; (
+            &lt;Image
+              source={{ uri: cartaCorrente.urlImmagine }}
+              style={{ width: '100%', height: 200, borderRadius: 12, marginBottom: 16 }}
+            />
+          )}
+          &lt;View style={{ width: '100%' }}>
+            {elementiMano}
+          &lt;/View>
+        &lt;/ScrollView>
+      &lt;/SafeAreaView>
+    &lt;/SafeAreaProvider>
+  );
+}
+
+const stileGame = StyleSheet.create({
+  container: { flexGrow: 1, alignItems: 'center', padding: 24, backgroundColor: '#1a1a2e' },
+  messaggio: { fontSize: 28, fontWeight: 'bold', marginBottom: 24, textAlign: 'center', color: 'white' },
+  nomeCarta: { fontSize: 18, textAlign: 'center', marginVertical: 12, paddingHorizontal: 16, fontWeight: '600', color: 'white' },
+  button: { paddingVertical: 12, paddingHorizontal: 24, borderRadius: 12, backgroundColor: '#7c3aed', marginVertical: 6 },
+  buttonText: { color: 'white', fontSize: 16, fontWeight: '600' },
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#EndScreen">EndScreen</a></li><li><a href="global.html#GameScreen">GameScreen</a></li><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#controllaFinePartita">controllaFinePartita</a></li><li><a href="global.html#gestisciScelta">gestisciScelta</a></li><li><a href="global.html#inizializzaPartita">inizializzaPartita</a></li><li><a href="global.html#posizioneCorretta">posizioneCorretta</a></li><li><a href="global.html#selezionaCarteCasuali">selezionaCarteCasuali</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat May 30 2026 14:39:35 GMT+0200 (Ora legale dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

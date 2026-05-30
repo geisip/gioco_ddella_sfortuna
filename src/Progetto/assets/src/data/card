@@ -1,0 +1,77 @@
+/**
+ * @fileoverview Applicazione "Gioco della Sfortuna" - Tema Videogiochi- File contenente gli oggetti Carta
+ * @author Jacopo Ricciardi
+ * @description Versione digitale con tema Videogiochi del gioco da tavolo "Stuff Happens"
+ */
+     
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+/**
+ * @typedef {Object} Carta
+ * @property {string} id - Identificatore della carta 
+ * @property {string} nome - Nome dell'evento sfortunato
+ * @property {number} indice - Indice di sfortuna da 1 a 99
+ * @property {string} urlImmagine - URL per ottenere  l'immagine
+ */
+
+const carte = [
+  { id: '1', nome: 'Perdi una partita online per un lag di 1 secondo', indice: 1, urlImmagine: 'https://i.imgur.com/vt8Pgar.png' },
+  { id: '2', nome: 'Il tuo personaggio muore per un errore evitabile proprio sul traguardo', indice: 3, urlImmagine: 'https://i.imgur.com/V5ar7kP.png' },
+  { id: '3', nome: 'Dimentichi di salvare e perdi 10 minuti di gioco', indice: 5, urlImmagine: 'https://i.imgur.com/xT1e1lA.png' },
+  { id: '4', nome: 'Un compagno di squadra ti fa perdere una partita facile su Rocket League', indice: 7, urlImmagine: 'https://i.imgur.com/B9jj8AQ.png' },
+  { id: '5', nome: 'Finisci le munizioni nel momento peggiore su Fortnite', indice: 9, urlImmagine: 'https://i.imgur.com/eo1Ya2j.png' },
+  { id: '6', nome: 'Il gioco si aggiorna e cambia i controlli che avevi imparato', indice: 11, urlImmagine: 'https://i.imgur.com/wuuZcyR.png' },
+  { id: '7', nome: 'Vieni eliminato per primo in un battle royale', indice: 13, urlImmagine: 'https://i.imgur.com/7cUdFPg.png' },
+  { id: '8', nome: 'Il tuo internet cade durante una partita ranked', indice: 15, urlImmagine: 'https://i.imgur.com/Aku7VpR.png' },
+  { id: '9', nome: 'Compri un DLC che si rivela deludente', indice: 17, urlImmagine: 'https://i.imgur.com/1dd98TV.png' },
+  { id: '10', nome: 'Dimentichi di salvare e perdi 1 ora di gioco', indice: 19, urlImmagine: 'https://i.imgur.com/FwmrfuB.png' },
+  { id: '11', nome: 'Vieni bannato per errore per 24 ore', indice: 21, urlImmagine: 'https://i.imgur.com/8MMx8O7.png' },
+  { id: '12', nome: 'Rompi il controller per la frustrazione', indice: 23, urlImmagine: 'https://i.imgur.com/tZIVhbk.png' },
+  { id: '13', nome: 'Perdi una partita al torneo amatoriale a causa di un bug', indice: 25, urlImmagine: 'https://i.imgur.com/Ix3cV0R.png' },
+  { id: '14', nome: 'Spendi 50€ in loot box su EA Sports FC e non ottieni nessun giocatore utile', indice: 27, urlImmagine: 'https://i.imgur.com/cFhrf41.png' },
+  { id: '15', nome: 'Un amico ti spoilera il finale di Red Dead Redemption 2 che stavi giocando', indice: 29, urlImmagine: 'https://i.imgur.com/Q6K1zo7.png' },
+  { id: '16', nome: 'Vieni escluso da un gruppo raid per il tuo livello basso', indice: 31, urlImmagine: 'https://i.imgur.com/OVWNEc4.png' },
+  { id: '17', nome: 'Il PC si spegne durante il boss finale di Kingdom Hearts', indice: 33, urlImmagine: 'https://i.imgur.com/65bn1qo.png' },
+  { id: '18', nome: 'Compri un gioco a prezzo pieno e il giorno dopo va in saldo al 90%', indice: 35, urlImmagine: 'https://i.imgur.com/y3bQQCW.png' },
+  { id: '19', nome: 'Il tuo compagno di squadra su EA Sports FC segna un autogol al 90°', indice: 37, urlImmagine: 'https://i.imgur.com/yAu22qU.png' },
+  { id: '20', nome: 'Perdi una streak di 50 vittorie consecutive su Rocket League per una disconnessione', indice: 39, urlImmagine: 'https://i.imgur.com/xsSC8ZG.png' },
+  { id: '21', nome: 'Il server del gioco chiude definitivamente e perdi tutto il progresso', indice: 41, urlImmagine: 'https://i.imgur.com/VQF9CZ2.png' },
+  { id: '22', nome: 'Il gioco che aspettavi da anni esce ed è un disastro totale', indice: 43, urlImmagine: 'https://i.imgur.com/nU04o6k_d.png?maxwidth=520&shape=thumb&fidelity=high' },
+  { id: '23', nome: 'Vieni derubato di tutti gli oggetti da un "amico" in un gioco online', indice: 45, urlImmagine: 'https://i.imgur.com/WNfnSLX.png' },
+  { id: '24', nome: 'Scopri che il gioco ha un finale segreto ma hai già cancellato il salvataggio', indice: 47, urlImmagine: 'https://i.imgur.com/46E9uZ4.png' },
+  { id: '25', nome: 'Il gioco si aggiorna e cancella tutti i tuoi salvataggi', indice: 49, urlImmagine: 'https://i.imgur.com/KrEl7Hz.png' },
+  { id: '26', nome: 'La tua classifica rank viene azzerata per un errore del sistema', indice: 51, urlImmagine: 'https://i.postimg.cc/x8KBQtbf/ID-26.png' },
+  { id: '27', nome: 'Perdi il tuo account da 5 anni per aver dimenticato la password', indice: 53, urlImmagine: 'https://i.postimg.cc/FFJ3V1SC/ID27-(2).png' },
+  { id: '28', nome: 'Il tuo account viene hackerato e perdi tutti gli oggetti rari accumulati', indice: 55, urlImmagine: 'https://i.postimg.cc/YqKgnkN3/ID27.png' },
+  { id: '29', nome: 'Investi 100€ in skin su Fortnite e il gioco chiude i server', indice: 57, urlImmagine: 'https://i.postimg.cc/pVnzJyj1/ID29.png' },
+  { id: '30', nome: 'Vieni bannato ingiustamente e il supporto non risponde mai', indice: 59, urlImmagine: 'https://i.postimg.cc/7PT0nbzs/ID30.png' },
+  { id: '31', nome: 'Perdi una finale di torneo amatoriale perché fanno rigiocare il tuo avversario per un problema tecnico', indice: 61, urlImmagine: 'https://i.postimg.cc/WpJgwtZX/ID31.png' },
+  { id: '32', nome: 'Il gioco che aspettavi da anni viene rimandato di altri 2 anni', indice: 63, urlImmagine: 'https://i.postimg.cc/zDRKF3hy/ID32.png' },
+  { id: '33', nome: 'Muori al boss finale di Kingdom Hearts dopo 2 ore di combattimento senza aver salvato', indice: 65, urlImmagine: 'https://i.postimg.cc/bY2k9dnD/ID33.png' },
+  { id: '34', nome: 'Investi 300€ in skin e il gioco chiude i server definitivamente', indice: 67, urlImmagine: 'https://i.postimg.cc/gc68Hrhn/ID34.png' },
+  { id: '35', nome: 'Il tuo account con centinaia di euro di oggetti viene bannato per sempre', indice: 69, urlImmagine: 'https://i.postimg.cc/WzrZNfjj/ID35.png' },
+  { id: '36', nome: 'Un tuo amico ti batte per la prima volta e non smette più di parlarne', indice: 71, urlImmagine: 'https://i.postimg.cc/j2NfxkTz/ID36.png' },
+  { id: '37', nome: 'Perdi tutti i progressi di Red Dead Redemption 2 per un salvataggio corrotto dopo 80 ore di gioco', indice: 73, urlImmagine: 'https://i.postimg.cc/NMZTwv34/ID37.png' },
+  { id: '38', nome: 'Il tuo controller si rompe definitivamente durante la scena finale di un gioco', indice: 75, urlImmagine: 'https://i.postimg.cc/7h7zHQ4S/ID38.png' },
+  { id: '39', nome: 'Compri una console nuova e scopri che il tuo gioco preferito non è compatibile', indice: 77, urlImmagine: 'https://i.postimg.cc/63FRNxkz/ID39.png' },
+  { id: '40', nome: 'Vieni doxxato dopo una vittoria in un torneo amatoriale online', indice: 79, urlImmagine: 'https://i.postimg.cc/7PGYL96f/ID40.png' },
+  { id: '41', nome: 'Perdi una borsa di studio per i voti crollati a causa del gaming', indice: 81, urlImmagine: 'https://i.postimg.cc/447N3Pd3/ID41.png' },
+  { id: '42', nome: 'Il tuo account EA Sports FC con tutte le squadre costruite viene resettato a inizio stagione', indice: 83, urlImmagine: 'https://i.postimg.cc/13gKCL5R/ID42.png' },
+  { id: '43', nome: 'Sviluppi una lesione al polso che ti impedisce di giocare per 6 mesi', indice: 85, urlImmagine: 'https://i.postimg.cc/htH1HpfR/ID43.png' },
+  { id: '44', nome: 'Perdi il lavoro perché continuavi a giocare durante lo smartworking', indice: 87, urlImmagine: 'https://i.postimg.cc/3N7Lz9fg/ID44.png' },
+  { id: '45', nome: 'Il tuo PC da 2000€ si fulmina durante il primo avvio di Red Dead Redemption 2', indice: 89, urlImmagine: 'https://i.postimg.cc/C5Yv9Jr4/ID45.png' },
+  { id: '46', nome: "La tua ex ti cancella tutti i salvataggi e l'account prima di lasciarti", indice: 91, urlImmagine: 'https://i.postimg.cc/d3vWgnN1/ID46.png' },
+  { id: '47', nome: 'Preordini una console da 800€, arriva rotta e il venditore sparisce', indice: 93, urlImmagine: 'https://i.postimg.cc/fyZH15qk/ID47.png' },
+  { id: '48', nome: 'Perdi il lavoro e la ragazza nello stesso giorno perché passavi tutto il tempo a giocare', indice: 95, urlImmagine: 'https://i.postimg.cc/Bt9zZ4vx/ID48.png' },
+  { id: '49', nome: "La TV da 1500€ comprata apposta per giocare cade e si rompe il giorno stesso dell'acquisto", indice: 97, urlImmagine: 'https://i.postimg.cc/MZCZfBMB/ID49.png' },
+  { id: '50', nome: "Avvii GTA 6 il giorno dell'uscita dopo 13 anni di attesa e la console esplode bruciando casa", indice: 99, urlImmagine: 'https://i.postimg.cc/JnXgfsrt/ID50.png' },
+];
+
+
+
+
+
+
+export default carte;
